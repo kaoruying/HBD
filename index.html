@@ -1,1 +1,612 @@
+from pathlib import Path
+import base64, io, html, json, textwrap
+from PIL import Image, ImageChops, ImageEnhance
+
+# ---------- helpers ----------
+def make_transparent_lineart(path, max_dim=760, pad=40):
+    """Convert white-background blue line art to transparent-background PNG, crop whitespace, resize."""
+    img = Image.open(path).convert("RGBA")
+    # Build alpha from distance from white / darkness
+    rgb = img.convert("RGB")
+    px = rgb.load()
+    w, h = rgb.size
+    alpha = Image.new("L", (w, h), 0)
+    apx = alpha.load()
+    for y in range(h):
+        for x in range(w):
+            r, g, b = px[x, y]
+            # white bg -> alpha 0; blue lines -> alpha high
+            darkness = 255 - min(r, g, b)
+            # amplify line opacity
+            a = max(0, min(255, int((darkness - 12) * 2.2)))
+            apx[x, y] = a
+    # keep original blue lines, but alpha white out
+    out = Image.new("RGBA", (w, h), (0,0,0,0))
+    out.putdata([(10, 45, 155, apx[x % w, x // w]) for x in range(w*h)])
+    # crop to content
+    bbox = alpha.point(lambda p: 255 if p > 18 else 0).getbbox()
+    if bbox:
+        left, top, right, bottom = bbox
+        left = max(0, left - pad)
+        top = max(0, top - pad)
+        right = min(w, right + pad)
+        bottom = min(h, bottom + pad)
+        out = out.crop((left, top, right, bottom))
+    # resize
+    ow, oh = out.size
+    scale = min(max_dim / max(ow, oh), 1)
+    if scale < 1:
+        out = out.resize((int(ow*scale), int(oh*scale)), Image.LANCZOS)
+    bio = io.BytesIO()
+    out.save(bio, format="PNG", optimize=True)
+    return "data:image/png;base64," + base64.b64encode(bio.getvalue()).decode("ascii")
+
+base = Path("/mnt/data/ghostwriter_images/generated")
+img_paths = {
+    "wave": base / "a_simple_minimalist_line_art_illustration_on_a_whi_1_batch_1.png",
+    "nod": base / "minimalist_line_art_scene_a_simple_cartoon_portra_2_batch_2.png",
+    "food": base / "a_clean_minimalist_white_background_illustrat_4_batch_4.png",
+    "cozy": base / "a_clean_minimalist_line_art_illustration_on_a_5_batch_5.png",
+    "listen": base / "a_clean_minimal_line_art_illustration_on_a_white_b_3_batch_3.png",
+    "cake": base / "a_simple_clean_line_art_illustration_on_a_white_ba_6_batch_6.png",
+    "sup": base / "a_clean_minimal_line_art_illustration_on_a_2_batch_1.png",
+    "mountain": base / "a_simple_line_art_illustration_scene_overall_a_c_3_batch_2.png",
+    "moto_park": base / "a_clean_blue_line_illustration_monochrome_line_ar_5_batch_4.png",
+    "moto_ride": base / "a_simple_line_art_illustration_overall_a_cute_car_4_batch_3.png",
+}
+missing = [k for k,p in img_paths.items() if not p.exists()]
+if missing:
+    raise FileNotFoundError(f"Missing images: {missing}")
+
+imgs = {k: make_transparent_lineart(p, max_dim=820 if k in ["sup","mountain","moto_park","moto_ride"] else 650) for k,p in img_paths.items()}
+
+pages = [
+    {
+        "label": "封面",
+        "body": "hi 你好 👋",
+        "images": ["wave"],
+        "className": "cover-page"
+    },
+    {
+        "label": "第1頁",
+        "body": """今天要介紹的這一位，
+是一位平常話不多，
+但很常出現在我的故事裡的人。
+
+他的常見回覆是：「嗯。」
+伴隨著睜大圓圓的眼睛，
+然後點頭。
+
+使用頻率非常高，
+用途非常廣。""",
+        "images": ["nod"]
+    },
+    {
+        "label": "第2頁",
+        "body": """他平常對食物的喜好，
+如果用 1 到 10 分來說，
+
+大部分都是 7 分。
+
+7 分對他而言，
+是一個可以接受，
+但還不到超級滿意的分數。""",
+        "images": ["food"]
+    },
+    {
+        "label": "第3頁",
+        "body": """他不太追求儀式感。
+
+對他來說，
+簡單、舒服、剛剛好，
+就蠻 OK 了。""",
+        "images": ["cozy"]
+    },
+    {
+        "label": "第4頁",
+        "body": """他還有一個特色是：
+
+看起來情緒很穩定，
+好像聽到什麼事都很淡定。
+
+但其實，
+有時候只是反應沒有那麼快。
+
+他長得一臉和善，
+但內心有自己一定的堅持。""",
+        "images": ["listen"]
+    },
+    {
+        "label": "第5頁",
+        "body": """但有趣的是，
+這個人曾經說過：
+
+「現在會記得別人生日的人很少了。」
+
+所以今天這件事，
+要特別註明一下：
+
+他有被記得。
+
+而且不是手機提醒那種記得。
+是真的有人記得。""",
+        "images": ["cake"]
+    },
+    {
+        "label": "第6頁",
+        "body": """他不是很適合太感人的禮物。
+
+照片太多，他可能會尷尬。
+文字太深，他可能會沉默。
+太用力祝福，他可能不知道要回什麼。
+
+所以只要讓他知道：
+
+今天有人記得他，
+就好。""",
+        "images": ["wave"]
+    },
+    {
+        "label": "第7頁",
+        "body": """希望這位壽星今年：
+
+工作多一點有趣的事，
+生活多一點開心的事，
+身體平安健康。
+
+還有，
+Miu 也要健健康康的。""",
+        "images": ["sup", "mountain", "moto_ride"],
+        "multi": True
+    },
+    {
+        "label": "第8頁",
+        "body": """最後正式介紹一次：
+
+這位是 6/30 的壽星。
+
+好像也沒辦法用一句話定義他，
+因為認識了兩年，
+到現在還是在了解他的過程。
+
+他低調、實際、話不多，
+但能肯定的是，
+他是一個心很善良，
+也很溫柔的人。""",
+        "images": ["moto_park"]
+    },
+    {
+        "label": "第9頁",
+        "body": """一直以來，
+謝謝你的包容與陪伴。
+
+祝你明天的鐵板燒吃得愉快。
+
+生日快樂。""",
+        "images": ["cake"],
+        "className": "ending-page"
+    },
+]
+
+# Escape page data safely for JS
+def esc_text(s):
+    return s
+
+pages_js = json.dumps(pages, ensure_ascii=False)
+imgs_js = json.dumps(imgs, ensure_ascii=False)
+
+html_doc = f"""<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>6/30 生日小書</title>
+<style>
+:root {{
+  --ink: #0a2f98;
+  --paper: #fff7e9;
+  --paper2: #fbedd8;
+  --brown: #7b5a3d;
+  --gold: #ba8550;
+  --shadow: rgba(64, 38, 13, .25);
+}}
+* {{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }}
+html, body {{ margin: 0; min-height: 100%; }}
+body {{
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: max(16px, env(safe-area-inset-top)) 14px max(18px, env(safe-area-inset-bottom));
+  color: #30251d;
+  font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 10% 5%, rgba(255,255,255,.85), transparent 28%),
+    radial-gradient(circle at 85% 10%, rgba(255,255,255,.55), transparent 24%),
+    linear-gradient(135deg, #f7e8d1 0%, #e2c39d 52%, #ad7c4d 100%);
+  overflow-x: hidden;
+}}
+.app {{
+  width: min(94vw, 470px);
+  text-align: center;
+}}
+.book-wrap {{
+  width: min(90vw, 410px);
+  height: min(130vw, 590px);
+  max-height: 72svh;
+  min-height: 480px;
+  margin: 0 auto;
+  perspective: 1900px;
+  position: relative;
+}}
+.book {{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 26px 24px rgba(52, 29, 10, .24));
+}}
+.book::before {{
+  content: "";
+  position: absolute;
+  inset: 10px auto 10px 11px;
+  width: 16px;
+  border-radius: 16px;
+  background: linear-gradient(to right, rgba(86, 51, 23, .25), rgba(86, 51, 23, .05), transparent);
+  z-index: 8;
+  pointer-events: none;
+}}
+.book::after {{
+  content: "";
+  position: absolute;
+  right: -5px;
+  bottom: 10px;
+  width: 94%;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(79, 47, 21, .16);
+  filter: blur(10px);
+  z-index: -1;
+}}
+.page-face,
+.flip-sheet {{
+  position: absolute;
+  inset: 0;
+  border-radius: 12px 22px 22px 12px;
+  background:
+    linear-gradient(90deg, rgba(106, 64, 24, .16), rgba(106,64,24,.035) 8%, transparent 18%, transparent 90%, rgba(106,64,24,.05)),
+    repeating-linear-gradient(0deg, rgba(92, 70, 42, .022) 0px, rgba(92, 70, 42, .022) 1px, transparent 1px, transparent 7px),
+    var(--paper);
+  border: 1px solid rgba(119, 83, 43, .26);
+  box-shadow:
+    inset 18px 0 22px rgba(102, 63, 28, .07),
+    inset -10px 0 18px rgba(102, 63, 28, .055),
+    0 16px 30px rgba(55, 32, 13, .16);
+  overflow: hidden;
+}}
+.page-face {{
+  z-index: 2;
+}}
+.flip-sheet {{
+  z-index: 20;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}}
+.flip-next {{
+  animation: flipNext .86s cubic-bezier(.18,.72,.26,1) forwards;
+}}
+.flip-prev {{
+  animation: flipPrev .86s cubic-bezier(.18,.72,.26,1) forwards;
+}}
+@keyframes flipNext {{
+  0% {{ transform: rotateY(0deg); opacity: 1; box-shadow: 0 20px 30px rgba(55,32,13,.18); }}
+  45% {{ transform: rotateY(-92deg) translateZ(8px); opacity: .95; }}
+  100% {{ transform: rotateY(-178deg); opacity: 0; box-shadow: -20px 20px 28px rgba(55,32,13,.10); }}
+}}
+@keyframes flipPrev {{
+  0% {{ transform: rotateY(-178deg); opacity: 0; }}
+  45% {{ transform: rotateY(-92deg) translateZ(8px); opacity: .95; }}
+  100% {{ transform: rotateY(0deg); opacity: 1; }}
+}}
+.page-inner {{
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 28px 28px 30px 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}}
+.page-label {{
+  font-size: clamp(.92rem, 3.6vw, 1.05rem);
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: var(--gold);
+  margin: 0;
+}}
+.illus-area {{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 130px;
+  max-height: 238px;
+  flex: 0 0 auto;
+}}
+.illus-area img {{
+  display: block;
+  max-width: 92%;
+  max-height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 0 rgba(10,47,152,.035));
+}}
+.multi-img {{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+  width: 100%;
+  align-items: center;
+  justify-items: center;
+  min-height: 112px;
+  max-height: 150px;
+}}
+.multi-img img {{
+  max-width: 112%;
+  max-height: 126px;
+}}
+.page-body {{
+  color: #2f2a25;
+  font-size: clamp(.91rem, 3.6vw, 1.08rem);
+  line-height: 1.72;
+  letter-spacing: .035em;
+  text-align: center;
+  white-space: pre-line;
+  word-break: keep-all;
+}}
+.cover-page .page-inner {{
+  justify-content: center;
+  gap: 20px;
+}}
+.cover-page .page-label {{
+  color: #2f2a25;
+  font-size: clamp(1.6rem, 8vw, 2.2rem);
+  letter-spacing: .05em;
+}}
+.cover-page .page-body {{
+  color: var(--ink);
+  font-weight: 900;
+  font-size: clamp(1.75rem, 8vw, 2.35rem);
+  line-height: 1.25;
+}}
+.cover-page .illus-area {{
+  max-height: 300px;
+}}
+.cover-page .illus-area img {{
+  max-height: 285px;
+  max-width: 82%;
+}}
+.ending-page .page-body {{
+  font-size: clamp(1rem, 4vw, 1.18rem);
+  line-height: 1.9;
+}}
+.corner {{
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 30px;
+  height: 30px;
+  opacity: .45;
+  background: linear-gradient(135deg, transparent 49%, rgba(150, 105, 55, .22) 50%);
+  border-bottom-right-radius: 16px;
+}}
+.controls {{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 16px;
+}}
+button {{
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 18px;
+  background: rgba(255, 248, 237, .86);
+  color: #4d3421;
+  font-weight: 800;
+  font-size: .98rem;
+  box-shadow: 0 8px 16px rgba(71, 41, 17, .15);
+  cursor: pointer;
+}}
+button:active {{ transform: translateY(1px); }}
+button:disabled {{ opacity: .35; cursor: default; transform: none; }}
+.counter {{
+  min-width: 76px;
+  color: rgba(52, 35, 23, .72);
+  font-weight: 900;
+  letter-spacing: .04em;
+}}
+.hint {{
+  margin-top: 10px;
+  color: rgba(52, 35, 23, .58);
+  font-size: .84rem;
+  letter-spacing: .04em;
+}}
+@media (max-width: 420px) {{
+  .book-wrap {{
+    width: 92vw;
+    height: min(135vw, 590px);
+    min-height: 470px;
+    max-height: 70svh;
+  }}
+  .page-inner {{
+    padding: 22px 22px 24px 30px;
+    gap: 8px;
+  }}
+  .illus-area {{
+    min-height: 108px;
+    max-height: 190px;
+  }}
+  .illus-area img {{
+    max-height: 182px;
+  }}
+  .multi-img {{
+    max-height: 124px;
+    min-height: 96px;
+  }}
+  .multi-img img {{
+    max-height: 106px;
+  }}
+  .page-body {{
+    font-size: clamp(.82rem, 3.45vw, .98rem);
+    line-height: 1.62;
+  }}
+  .controls {{
+    gap: 10px;
+  }}
+  button {{
+    padding: 10px 15px;
+  }}
+}}
+@media (max-height: 720px) {{
+  .book-wrap {{
+    max-height: 68svh;
+    min-height: 430px;
+  }}
+  .page-inner {{
+    padding-top: 20px;
+    padding-bottom: 22px;
+  }}
+  .illus-area {{
+    min-height: 95px;
+    max-height: 165px;
+  }}
+  .illus-area img {{
+    max-height: 156px;
+  }}
+  .multi-img {{
+    max-height: 110px;
+  }}
+  .multi-img img {{
+    max-height: 96px;
+  }}
+  .page-body {{
+    font-size: clamp(.78rem, 3.2vw, .94rem);
+    line-height: 1.52;
+  }}
+}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="book-wrap">
+    <div class="book" id="book">
+      <article class="page-face" id="pageFace"></article>
+    </div>
+  </div>
+  <div class="controls">
+    <button id="prevBtn" type="button">上一頁</button>
+    <div class="counter" id="counter">1 / {len(pages)}</div>
+    <button id="nextBtn" type="button">下一頁</button>
+  </div>
+  <div class="hint">點一下書頁也可以翻到下一頁</div>
+</div>
+
+<script>
+const PAGES = {pages_js};
+const IMGS = {imgs_js};
+const book = document.getElementById('book');
+const pageFace = document.getElementById('pageFace');
+const counter = document.getElementById('counter');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let current = 0;
+let isTurning = false;
+
+function createPageHTML(page) {{
+  const className = page.className || "";
+  const imgHTML = page.multi
+    ? `<div class="illus-area multi-img">${{page.images.map(k => `<img src="${{IMGS[k]}}" alt="">`).join("")}}</div>`
+    : `<div class="illus-area">${{page.images.map(k => `<img src="${{IMGS[k]}}" alt="">`).join("")}}</div>`;
+
+  return `
+    <div class="page-inner ${{className}}">
+      <h1 class="page-label">${{escapeHTML(page.label)}}</h1>
+      ${{imgHTML}}
+      <div class="page-body">${{escapeHTML(page.body)}}</div>
+      <div class="corner"></div>
+    </div>
+  `;
+}}
+
+function escapeHTML(str) {{
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}}
+
+function renderPage(index) {{
+  pageFace.className = `page-face ${{PAGES[index].className || ""}}`;
+  pageFace.innerHTML = createPageHTML(PAGES[index]);
+  counter.textContent = `${{index + 1}} / ${{PAGES.length}}`;
+  prevBtn.disabled = index === 0 || isTurning;
+  nextBtn.disabled = index === PAGES.length - 1 || isTurning;
+}}
+
+function turnNext() {{
+  if (isTurning || current >= PAGES.length - 1) return;
+  isTurning = true;
+  const oldHTML = pageFace.innerHTML;
+  const oldClass = pageFace.className;
+  current += 1;
+  renderPage(current);
+
+  const flip = document.createElement('article');
+  flip.className = oldClass + ' flip-sheet flip-next';
+  flip.innerHTML = oldHTML;
+  book.appendChild(flip);
+  setTimeout(() => {{
+    flip.remove();
+    isTurning = false;
+    renderPage(current);
+  }}, 880);
+}}
+
+function turnPrev() {{
+  if (isTurning || current <= 0) return;
+  isTurning = true;
+  current -= 1;
+  renderPage(current);
+
+  const flip = document.createElement('article');
+  flip.className = `page-face ${{PAGES[current].className || ""}} flip-sheet flip-prev`;
+  flip.innerHTML = createPageHTML(PAGES[current]);
+  book.appendChild(flip);
+  setTimeout(() => {{
+    flip.remove();
+    isTurning = false;
+    renderPage(current);
+  }}, 880);
+}}
+
+prevBtn.addEventListener('click', turnPrev);
+nextBtn.addEventListener('click', turnNext);
+book.addEventListener('click', turnNext);
+window.addEventListener('keydown', (e) => {{
+  if (e.key === 'ArrowRight' || e.key === ' ') turnNext();
+  if (e.key === 'ArrowLeft') turnPrev();
+}});
+renderPage(0);
+</script>
+</body>
+</html>
+"""
+
+out = Path("/mnt/data/630_B_birthday_storybook_flipbook.html")
+out.write_text(html_doc, encoding="utf-8")
+print(out)
 
