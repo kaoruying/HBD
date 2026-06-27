@@ -798,17 +798,49 @@
 
     }
 
+    .memory-page .quote-note {
+
+      position: relative;
+
+      margin: 4px 0 8px;
+
+      padding: 8px 0 8px 14px;
+
+      border-left: 3px solid rgba(176, 138, 79, 0.52);
+
+      background: linear-gradient(90deg, rgba(176, 138, 79, 0.09), transparent 88%);
+
+      border-radius: 0 14px 14px 0;
+
+      line-height: 1.58;
+
+    }
+
+    .memory-space {
+
+      height: 18px;
+
+    }
+
+    .memory-space.large {
+
+      height: 24px;
+
+    }
+
     .memory-focus {
 
       display: inline-block;
 
       position: relative;
 
-      margin: 2px 0;
+      margin: 4px 0;
 
-      font-size: 1.2em;
+      font-size: 1.24em;
 
       font-weight: 900;
+
+      letter-spacing: 0.04em;
 
     }
 
@@ -831,6 +863,14 @@
       z-index: -1;
 
       border-radius: 999px;
+
+    }
+
+    .soft-point {
+
+      font-size: 1.08em;
+
+      font-weight: 800;
 
     }
 
@@ -1288,6 +1328,12 @@
 
       }
 
+      .memory-space.large {
+
+        height: 18px;
+
+      }
+
     }
 
     @media (max-width: 360px) {
@@ -1512,7 +1558,7 @@
 
     </section>
 
-    <section class="page long">
+    <section class="page long memory-page">
 
       <div class="card">
 
@@ -1526,23 +1572,25 @@
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 1800ms;">「現在會記得別人生日的人很少了。」</div>
+            <div class="line quote-note" style="--d: 1800ms;">「現在會記得別人生日的人很少了。」</div>
 
-            <div class="spacer"></div>
+            <div class="memory-space"></div>
 
             <div class="line" style="--d: 3000ms;">所以今天這件事，</div>
 
             <div class="line" style="--d: 3700ms;">要特別註明一下：</div>
 
-            <div class="spacer"></div>
+            <div class="memory-space large"></div>
 
             <div class="line memory-focus" style="--d: 4700ms;">他有被記得。</div>
 
-            <div class="spacer"></div>
+            <div class="memory-space large"></div>
 
             <div class="line" style="--d: 5800ms;">而且不是手機提醒那種記得。</div>
 
-            <div class="line" style="--d: 6500ms;"><span class="point">是真的有人記得。</span></div>
+            <div class="memory-space"></div>
+
+            <div class="line soft-point" style="--d: 6500ms;">是真的有人記得。</div>
 
           </div>
 
