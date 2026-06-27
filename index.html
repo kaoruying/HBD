@@ -246,6 +246,10 @@
 
       justify-content: center;
 
+      text-align: left;
+
+      align-items: flex-start;
+
     }
 
     .long .content {
@@ -253,6 +257,16 @@
       justify-content: flex-start;
 
       padding-top: 6px;
+
+    }
+
+    .final .content {
+
+      justify-content: center;
+
+      text-align: center;
+
+      align-items: center;
 
     }
 
@@ -266,6 +280,8 @@
 
       font-weight: 500;
 
+      width: 100%;
+
     }
 
     .small-text {
@@ -277,6 +293,8 @@
       letter-spacing: 0.035em;
 
       font-weight: 500;
+
+      width: 100%;
 
     }
 
@@ -290,14 +308,6 @@
 
     }
 
-    .center {
-
-      text-align: center;
-
-      align-items: center;
-
-    }
-
     .line {
 
       opacity: 0;
@@ -308,7 +318,7 @@
 
     .page.active .line {
 
-      animation: lineFadeUp 900ms cubic-bezier(.22,.61,.36,1) forwards;
+      animation: lineFadeUp 920ms cubic-bezier(.22,.61,.36,1) forwards;
 
       animation-delay: var(--d, 0ms);
 
@@ -348,9 +358,27 @@
 
     .em {
 
-      font-size: 1.08em;
+      font-weight: 800;
 
-      font-weight: 700;
+    }
+
+    .point {
+
+      font-size: 1.12em;
+
+      font-weight: 800;
+
+    }
+
+    .big-point {
+
+      display: inline-block;
+
+      font-size: 1.25em;
+
+      font-weight: 900;
+
+      letter-spacing: 0.04em;
 
     }
 
@@ -362,11 +390,11 @@
 
     .hello {
 
-      font-size: clamp(36px, 10vw, 54px);
+      font-size: clamp(40px, 10.5vw, 58px);
 
       letter-spacing: 0.06em;
 
-      font-weight: 600;
+      font-weight: 800;
 
       opacity: 0;
 
@@ -404,19 +432,19 @@
 
       display: inline-block;
 
-      font-size: clamp(38px, 11vw, 58px);
+      font-size: clamp(48px, 13vw, 68px);
 
       line-height: 1.05;
 
       letter-spacing: 0.08em;
 
-      margin: 4px 0 6px;
+      margin: 4px 0 8px;
 
       color: var(--text);
 
-    }
+      font-weight: 900;
 
-    /* 嗯。頁面 */
+    }
 
     .eyes {
 
@@ -482,8 +510,6 @@
 
     }
 
-    /* 7 分人頁面 */
-
     .rating-wrap {
 
       margin: 12px 0 12px;
@@ -548,7 +574,7 @@
 
     .page.active .rating-fill {
 
-      animation: fillSeven 2400ms cubic-bezier(.18,.8,.25,1) forwards 2000ms;
+      animation: fillSeven 2500ms cubic-bezier(.18,.8,.25,1) forwards 2000ms;
 
     }
 
@@ -578,7 +604,7 @@
 
     .page.active .rating-nums span:nth-child(7) {
 
-      animation: sevenGlow 700ms ease forwards 4500ms;
+      animation: sevenGlow 700ms ease forwards 4550ms;
 
     }
 
@@ -598,13 +624,11 @@
 
     .cert-stamp {
 
-      align-self: center;
-
-      margin-top: 12px;
+      margin-top: 14px;
 
       width: fit-content;
 
-      padding: 6px 13px;
+      padding: 7px 15px;
 
       border: 2px solid var(--gold);
 
@@ -614,9 +638,9 @@
 
       font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
 
-      font-size: 14px;
+      font-size: 15px;
 
-      font-weight: 800;
+      font-weight: 900;
 
       letter-spacing: 0.09em;
 
@@ -628,7 +652,7 @@
 
     .page.active .cert-stamp {
 
-      animation: stampIn 620ms cubic-bezier(.18, 1.35, .35, 1) forwards 7600ms;
+      animation: stampIn 620ms cubic-bezier(.18, 1.35, .35, 1) forwards 7700ms;
 
     }
 
@@ -660,21 +684,17 @@
 
     }
 
-    /* 處理中 */
-
     .processing {
 
-      align-self: flex-start;
+      margin: 8px 0 12px 0;
 
-      margin: 8px 0 10px 0;
-
-      color: rgba(31, 42, 54, 0.42);
+      color: rgba(31, 42, 54, 0.5);
 
       font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
 
-      font-size: 22px;
+      font-size: 24px;
 
-      font-weight: 700;
+      font-weight: 900;
 
       letter-spacing: 0.08em;
 
@@ -686,7 +706,7 @@
 
     .page.active .processing {
 
-      animation: processingSequence 3000ms ease forwards 2400ms;
+      animation: processingSequence 3100ms ease forwards 2450ms;
 
     }
 
@@ -700,7 +720,7 @@
 
       }
 
-      15% {
+      12% {
 
         opacity: 1;
 
@@ -708,21 +728,21 @@
 
       }
 
-      30% {
+      26% {
 
-        opacity: 0.2;
+        opacity: 0.25;
 
       }
 
-      42% {
+      40% {
 
         opacity: 1;
 
       }
 
-      55% {
+      54% {
 
-        opacity: 0.2;
+        opacity: 0.25;
 
       }
 
@@ -742,8 +762,6 @@
 
     }
 
-    /* 被記得頁面 */
-
     .memory-focus {
 
       display: inline-block;
@@ -752,9 +770,9 @@
 
       margin: 2px 0;
 
-      font-size: 1.08em;
+      font-size: 1.2em;
 
-      font-weight: 700;
+      font-weight: 900;
 
     }
 
@@ -770,7 +788,7 @@
 
       bottom: 4px;
 
-      height: 9px;
+      height: 10px;
 
       background: var(--gold-soft);
 
@@ -780,57 +798,35 @@
 
     }
 
-    /* Miu 腳印 */
+    .miu-page .paw-path {
 
-    .paw-inline {
+      position: absolute;
 
-      display: flex;
+      inset: 0;
 
-      gap: 12px;
+      pointer-events: none;
 
-      margin-top: 12px;
+      z-index: 1;
 
-      margin-left: 4px;
+    }
 
-      align-items: center;
+    .paw {
+
+      position: absolute;
+
+      width: 28px;
+
+      height: 25px;
 
       opacity: 0;
 
-    }
-
-    .page.active .paw-inline {
-
-      animation: pawsWrapIn 700ms ease forwards 4300ms;
+      transform: rotate(-18deg) scale(0.86);
 
     }
 
-    @keyframes pawsWrapIn {
+    .paw i,
 
-      to {
-
-        opacity: 1;
-
-      }
-
-    }
-
-    .paw-mark {
-
-      position: relative;
-
-      width: 24px;
-
-      height: 22px;
-
-      transform: rotate(-18deg) scale(0.88);
-
-      opacity: 0;
-
-    }
-
-    .paw-mark i,
-
-    .paw-mark b {
+    .paw b {
 
       position: absolute;
 
@@ -840,45 +836,53 @@
 
     }
 
-    .paw-mark i {
+    .paw i {
 
-      width: 6px;
+      width: 7px;
 
-      height: 7px;
+      height: 8px;
 
       border-radius: 50%;
 
     }
 
-    .paw-mark i:nth-child(1) { left: 1px; top: 4px; }
+    .paw i:nth-child(1) { left: 1px; top: 5px; }
 
-    .paw-mark i:nth-child(2) { left: 7px; top: 0; }
+    .paw i:nth-child(2) { left: 8px; top: 0; }
 
-    .paw-mark i:nth-child(3) { left: 14px; top: 0; }
+    .paw i:nth-child(3) { left: 16px; top: 0; }
 
-    .paw-mark i:nth-child(4) { left: 20px; top: 4px; }
+    .paw i:nth-child(4) { left: 23px; top: 5px; }
 
-    .paw-mark b {
+    .paw b {
 
-      left: 7px;
+      left: 8px;
 
-      top: 10px;
+      top: 11px;
 
-      width: 12px;
+      width: 14px;
 
-      height: 9px;
+      height: 11px;
 
       border-radius: 50% 50% 55% 55%;
 
     }
 
-    .page.active .paw-mark:nth-child(1) { animation: pawIn 500ms ease forwards 4450ms; }
+    .miu-page .paw:nth-child(1) { left: 34px; bottom: 108px; }
 
-    .page.active .paw-mark:nth-child(2) { animation: pawIn 500ms ease forwards 4650ms; }
+    .miu-page .paw:nth-child(2) { left: 78px; bottom: 146px; }
 
-    .page.active .paw-mark:nth-child(3) { animation: pawIn 500ms ease forwards 4850ms; }
+    .miu-page .paw:nth-child(3) { left: 124px; bottom: 120px; }
 
-    .page.active .paw-mark:nth-child(4) { animation: pawIn 500ms ease forwards 5050ms; }
+    .miu-page .paw:nth-child(4) { left: 170px; bottom: 160px; }
+
+    .page.active.miu-page .paw:nth-child(1) { animation: pawIn 560ms ease forwards 4600ms; }
+
+    .page.active.miu-page .paw:nth-child(2) { animation: pawIn 560ms ease forwards 4850ms; }
+
+    .page.active.miu-page .paw:nth-child(3) { animation: pawIn 560ms ease forwards 5100ms; }
+
+    .page.active.miu-page .paw:nth-child(4) { animation: pawIn 560ms ease forwards 5350ms; }
 
     @keyframes pawIn {
 
@@ -886,7 +890,7 @@
 
         opacity: 0;
 
-        transform: translateY(6px) rotate(-18deg) scale(0.82);
+        transform: translateY(8px) rotate(-18deg) scale(0.78);
 
       }
 
@@ -894,13 +898,11 @@
 
         opacity: 1;
 
-        transform: translateY(0) rotate(-18deg) scale(0.95);
+        transform: translateY(0) rotate(-18deg) scale(1);
 
       }
 
     }
-
-    /* 鐵板燒 */
 
     .teppan {
 
@@ -1102,8 +1104,6 @@
 
     }
 
-    /* 進度點 */
-
     .dots {
 
       position: fixed;
@@ -1276,13 +1276,11 @@
 
   <main class="deck" id="deck">
 
-    <!-- 封面 -->
-
     <section class="page active">
 
       <div class="card">
 
-        <div class="content center">
+        <div class="content">
 
           <div class="hello">hi 你好</div>
 
@@ -1291,8 +1289,6 @@
       </div>
 
     </section>
-
-    <!-- 第 1 頁 -->
 
     <section class="page">
 
@@ -1304,7 +1300,7 @@
 
             <div class="line" style="--d: 180ms;">今天要介紹的這一位，</div>
 
-            <div class="line" style="--d: 700ms;">是一位平常話不多，</div>
+            <div class="line" style="--d: 700ms;">是一位平常<span class="point">話不多</span>，</div>
 
             <div class="line" style="--d: 1220ms;">但很常出現在我的故事裡的人。</div>
 
@@ -1315,8 +1311,6 @@
       </div>
 
     </section>
-
-    <!-- 第 2 頁 -->
 
     <section class="page">
 
@@ -1332,15 +1326,15 @@
 
             <div class="line quote-big" style="--d: 720ms;">「嗯。」</div>
 
-            <div class="line" style="--d: 1650ms;">伴隨著睜大圓圓的眼睛，</div>
+            <div class="line" style="--d: 1650ms;">伴隨著<span class="point">睜大圓圓的眼睛</span>，</div>
 
             <div class="line" style="--d: 2250ms;">然後點頭。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 3000ms;">使用頻率非常高，</div>
+            <div class="line" style="--d: 3000ms;">使用頻率<span class="point">非常高</span>，</div>
 
-            <div class="line" style="--d: 3600ms;">用途非常廣。</div>
+            <div class="line" style="--d: 3600ms;">用途<span class="point">非常廣</span>。</div>
 
           </div>
 
@@ -1349,8 +1343,6 @@
       </div>
 
     </section>
-
-    <!-- 第 3 頁：7 分人 -->
 
     <section class="page long">
 
@@ -1382,21 +1374,21 @@
 
             </div>
 
-            <div class="line" style="--d: 3200ms;">大部分都是 <span class="gold em">7 分。</span></div>
+            <div class="line" style="--d: 3200ms;">大部分都是 <span class="big-point gold">7 分。</span></div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 4000ms;">7 分對他而言，</div>
+            <div class="line" style="--d: 4000ms;"><span class="point gold">7 分</span>對他而言，</div>
 
             <div class="line" style="--d: 4700ms;">是一個可以接受，</div>
 
-            <div class="line" style="--d: 5400ms;">但還不到超級滿意的分數。</div>
+            <div class="line" style="--d: 5400ms;">但還不到<span class="point">超級滿意</span>的分數。</div>
 
             <div class="spacer"></div>
 
             <div class="line" style="--d: 6300ms;">原來他不是5分人也不是8分人</div>
 
-            <div class="line em" style="--d: 7000ms;">是7分人</div>
+            <div class="line" style="--d: 7000ms;"><span class="big-point">是7分人</span></div>
 
             <div class="cert-stamp">7 分人認證</div>
 
@@ -1407,8 +1399,6 @@
       </div>
 
     </section>
-
-    <!-- 第 4 頁 -->
 
     <section class="page">
 
@@ -1424,7 +1414,7 @@
 
             <div class="line" style="--d: 850ms;">對他來說，</div>
 
-            <div class="line" style="--d: 1450ms;">簡單、舒服、剛剛好，</div>
+            <div class="line" style="--d: 1450ms;"><span class="point">簡單、舒服、剛剛好</span>，</div>
 
             <div class="line" style="--d: 2050ms;">就蠻 OK 了。</div>
 
@@ -1435,8 +1425,6 @@
       </div>
 
     </section>
-
-    <!-- 第 5 頁：處理中 -->
 
     <section class="page long">
 
@@ -1460,13 +1448,13 @@
 
             <div class="processing">……處理中</div>
 
-            <div class="line" style="--d: 5700ms;">有時候只是反應沒有那麼快。</div>
+            <div class="line" style="--d: 5700ms;">有時候只是<span class="point">反應沒有那麼快</span>。</div>
 
             <div class="spacer"></div>
 
             <div class="line" style="--d: 6550ms;">他長得一臉和善，</div>
 
-            <div class="line" style="--d: 7250ms;">但內心有自己一定的堅持。</div>
+            <div class="line" style="--d: 7250ms;">但內心有自己一定的<span class="point">堅持</span>。</div>
 
           </div>
 
@@ -1476,15 +1464,13 @@
 
     </section>
 
-    <!-- 第 6 頁：被記得 -->
-
     <section class="page long">
 
       <div class="card">
 
         <div class="content">
 
-          <div class="small-text center">
+          <div class="small-text">
 
             <div class="line" style="--d: 180ms;">但有趣的是，</div>
 
@@ -1508,7 +1494,7 @@
 
             <div class="line" style="--d: 5800ms;">而且不是手機提醒那種記得。</div>
 
-            <div class="line" style="--d: 6500ms;">是真的有人記得。</div>
+            <div class="line" style="--d: 6500ms;"><span class="point">是真的有人記得。</span></div>
 
           </div>
 
@@ -1517,8 +1503,6 @@
       </div>
 
     </section>
-
-    <!-- 第 7 頁 -->
 
     <section class="page long">
 
@@ -1544,9 +1528,9 @@
 
             <div class="spacer"></div>
 
-            <div class="line em" style="--d: 4400ms;">有人記得他生日</div>
+            <div class="line" style="--d: 4400ms;"><span class="big-point">有人記得他生日</span></div>
 
-            <div class="line em" style="--d: 5100ms;">就好。</div>
+            <div class="line" style="--d: 5100ms;"><span class="big-point">就好。</span></div>
 
           </div>
 
@@ -1556,11 +1540,21 @@
 
     </section>
 
-    <!-- 第 8 頁：Miu -->
-
-    <section class="page long">
+    <section class="page long miu-page">
 
       <div class="card">
+
+        <div class="paw-path" aria-hidden="true">
+
+          <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
+
+          <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
+
+          <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
+
+          <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
+
+        </div>
 
         <div class="content">
 
@@ -1580,19 +1574,7 @@
 
             <div class="line" style="--d: 3400ms;">還有，</div>
 
-            <div class="line em" style="--d: 4100ms;">Miu 也要健健康康的。</div>
-
-            <div class="paw-inline" aria-hidden="true">
-
-              <div class="paw-mark"><i></i><i></i><i></i><i></i><b></b></div>
-
-              <div class="paw-mark"><i></i><i></i><i></i><i></i><b></b></div>
-
-              <div class="paw-mark"><i></i><i></i><i></i><i></i><b></b></div>
-
-              <div class="paw-mark"><i></i><i></i><i></i><i></i><b></b></div>
-
-            </div>
+            <div class="line" style="--d: 4100ms;"><span class="big-point">Miu 也要健健康康的。</span></div>
 
           </div>
 
@@ -1601,8 +1583,6 @@
       </div>
 
     </section>
-
-    <!-- 第 9 頁 -->
 
     <section class="page long">
 
@@ -1632,9 +1612,9 @@
 
             <div class="line" style="--d: 5100ms;">但能肯定的是，</div>
 
-            <div class="line em" style="--d: 6000ms;">他是一個心很善良、</div>
+            <div class="line" style="--d: 6000ms;"><span class="big-point">他是一個心很善良、</span></div>
 
-            <div class="line em" style="--d: 6800ms;">也很溫柔的人。</div>
+            <div class="line" style="--d: 6800ms;"><span class="big-point">也很溫柔的人。</span></div>
 
           </div>
 
@@ -1644,13 +1624,11 @@
 
     </section>
 
-    <!-- 第 10 頁 -->
-
-    <section class="page">
+    <section class="page final">
 
       <div class="card">
 
-        <div class="content center">
+        <div class="content">
 
           <div class="text">
 
@@ -1684,7 +1662,7 @@
 
             <div class="spacer"></div>
 
-            <div class="line em" style="--d: 3600ms;">生日快樂</div>
+            <div class="line" style="--d: 3600ms;"><span class="big-point">生日快樂</span></div>
 
           </div>
 
@@ -1754,7 +1732,7 @@
 
       const animated = page.querySelectorAll(
 
-        ".line, .hello, .rating-wrap, .rating-fill, .cert-stamp, .processing, .teppan, .steam, .eyes, .paw-inline, .paw-mark"
+        ".line, .hello, .rating-wrap, .rating-fill, .cert-stamp, .processing, .teppan, .steam, .eyes, .paw"
 
       );
 
@@ -1869,42 +1847,6 @@
       if (e.key === "ArrowRight") goNext();
 
       if (e.key === "ArrowLeft") goPrev();
-
-    });
-
-    deck.addEventListener("mousedown", (e) => {
-
-      startX = e.clientX;
-
-      startY = e.clientY;
-
-      isDragging = true;
-
-    });
-
-    deck.addEventListener("mouseup", (e) => {
-
-      if (!isDragging) return;
-
-      const diffX = e.clientX - startX;
-
-      const diffY = e.clientY - startY;
-
-      if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
-
-        if (diffX < 0) {
-
-          goNext();
-
-        } else {
-
-          goPrev();
-
-        }
-
-      }
-
-      isDragging = false;
 
     });
 
