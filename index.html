@@ -1,1041 +1,1873 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
   <title>生日快樂</title>
 
   <style>
+
     :root {
+
       --app-height: 100svh;
+
       --bg: #f7f1e8;
+
       --paper: #fffaf2;
+
       --text: #1f2a36;
+
       --muted: #8a8177;
+
       --gold: #b08a4f;
+
       --gold-soft: rgba(176, 138, 79, 0.16);
+
       --line: rgba(31, 42, 54, 0.13);
+
       --shadow: 0 18px 45px rgba(31, 42, 54, 0.12);
+
     }
 
     * {
+
       box-sizing: border-box;
+
       -webkit-tap-highlight-color: transparent;
+
     }
 
     html,
+
     body {
+
       margin: 0;
+
       width: 100%;
+
       height: 100%;
+
       overflow: hidden;
+
       background:
+
         radial-gradient(circle at 16% 14%, rgba(176, 138, 79, 0.09), transparent 28%),
+
         radial-gradient(circle at 84% 78%, rgba(31, 42, 54, 0.07), transparent 30%),
+
         var(--bg);
+
       color: var(--text);
+
       font-family:
+
         "Noto Serif TC",
+
         "Noto Sans TC",
+
         "PingFang TC",
+
         "Microsoft JhengHei",
+
         serif;
+
     }
 
     body::before {
+
       content: "";
+
       position: fixed;
+
       inset: 0;
+
       pointer-events: none;
+
       opacity: 0.28;
+
       background-image:
+
         linear-gradient(rgba(31,42,54,0.03) 1px, transparent 1px),
+
         linear-gradient(90deg, rgba(31,42,54,0.02) 1px, transparent 1px);
+
       background-size: 36px 36px;
+
       mask-image: radial-gradient(circle at center, black, transparent 78%);
+
     }
 
     .deck {
+
       position: relative;
+
       width: 100vw;
+
       height: var(--app-height);
+
       overflow: hidden;
+
       touch-action: pan-y;
+
     }
 
     .page {
+
       position: absolute;
+
       inset: 0;
+
       display: grid;
+
       place-items: center;
+
       padding: 12px 18px 74px;
+
       transform: translateX(100%);
+
       opacity: 0;
+
       transition:
+
         transform 620ms cubic-bezier(.22, .9, .24, 1),
+
         opacity 380ms ease;
+
       will-change: transform, opacity;
+
     }
 
     .page.prev {
+
       transform: translateX(-100%);
+
       opacity: 0;
+
     }
 
     .page.active {
+
       transform: translateX(0);
+
       opacity: 1;
+
       z-index: 2;
+
     }
 
     .card {
+
       position: relative;
+
       width: min(92vw, 430px);
+
       height: min(680px, calc(var(--app-height) - 106px));
+
       min-height: 500px;
-      padding: 34px 28px 34px;
+
+      padding: 34px 28px;
+
       border: 1px solid rgba(31, 42, 54, 0.08);
+
       border-radius: 28px;
+
       background:
+
         linear-gradient(145deg, rgba(255,255,255,0.58), rgba(255,250,242,0.9)),
+
         var(--paper);
+
       box-shadow: var(--shadow);
+
       overflow: hidden;
+
     }
 
     .card::before {
+
       content: "";
+
       position: absolute;
+
       top: 18px;
+
       right: 20px;
+
       width: 46px;
+
       height: 46px;
+
       border-top: 1px solid rgba(176, 138, 79, 0.35);
+
       border-right: 1px solid rgba(176, 138, 79, 0.35);
+
       border-radius: 0 18px 0 0;
+
       opacity: 0.7;
+
     }
 
     .card::after {
+
       content: "";
+
       position: absolute;
+
       left: 18px;
+
       bottom: 20px;
+
       width: 46px;
+
       height: 46px;
+
       border-left: 1px solid rgba(176, 138, 79, 0.26);
+
       border-bottom: 1px solid rgba(176, 138, 79, 0.26);
+
       border-radius: 0 0 0 18px;
+
       opacity: 0.7;
+
     }
 
     .content {
+
       position: relative;
+
       z-index: 2;
+
       height: 100%;
+
       display: flex;
+
       flex-direction: column;
+
       justify-content: center;
+
     }
 
     .long .content {
+
       justify-content: flex-start;
+
       padding-top: 6px;
+
     }
 
     .text {
+
       font-size: clamp(21px, 5.4vw, 27px);
+
       line-height: 1.72;
+
       letter-spacing: 0.035em;
+
       font-weight: 500;
+
     }
 
     .small-text {
+
       font-size: clamp(18px, 4.7vw, 23px);
+
       line-height: 1.65;
+
       letter-spacing: 0.035em;
+
       font-weight: 500;
+
     }
 
     .long .small-text {
+
       font-size: clamp(16.5px, 4.25vw, 20.5px);
+
       line-height: 1.5;
+
       letter-spacing: 0.028em;
+
     }
 
     .center {
+
       text-align: center;
+
       align-items: center;
+
     }
 
     .line {
+
       opacity: 0;
-      transform: translateY(10px);
+
+      transform: translateY(18px);
+
+      filter: blur(4px);
+
     }
 
     .page.active .line {
-      animation: fadeUp 560ms ease forwards;
+
+      animation: lineFadeUp 980ms cubic-bezier(.22,.61,.36,1) forwards;
+
       animation-delay: var(--d, 0ms);
+
+    }
+
+    @keyframes lineFadeUp {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(18px);
+
+        filter: blur(4px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+        filter: blur(0);
+
+      }
+
     }
 
     @keyframes fadeUp {
+
       to {
+
         opacity: 1;
+
         transform: translateY(0);
+
       }
+
     }
 
     .spacer {
+
       height: 18px;
+
     }
 
     .long .spacer {
+
       height: 10px;
+
     }
 
     .em {
+
       font-size: 1.08em;
+
       font-weight: 700;
+
     }
 
     .gold {
+
       color: var(--gold);
+
     }
 
     .hello {
+
       font-size: clamp(36px, 10vw, 54px);
+
       letter-spacing: 0.06em;
+
       font-weight: 600;
+
       opacity: 0;
-      transform: translateY(10px);
+
+      transform: translateY(14px);
+
+      filter: blur(4px);
+
     }
 
     .page.active .hello {
-      animation: fadeUp 700ms ease forwards 200ms;
+
+      animation: lineFadeUp 1100ms cubic-bezier(.22,.61,.36,1) forwards 250ms;
+
     }
 
     .quote-big {
+
       display: inline-block;
+
       font-size: clamp(38px, 11vw, 58px);
+
       line-height: 1.05;
+
       letter-spacing: 0.08em;
+
       margin: 4px 0 6px;
+
       color: var(--text);
+
     }
 
     /* 嗯。頁面 */
+
     .eyes {
+
       position: absolute;
+
       right: 32px;
+
       top: 62px;
+
       font-family: system-ui, sans-serif;
+
       font-size: 30px;
+
       letter-spacing: 4px;
+
       color: rgba(31, 42, 54, 0.52);
+
       opacity: 0;
+
       transform-origin: center bottom;
+
       z-index: 3;
+
     }
 
     .page.active .eyes {
+
       animation:
-        eyesIn 600ms ease forwards 780ms,
-        nod 1150ms ease-in-out infinite 1400ms;
+
+        eyesIn 700ms ease forwards 1200ms,
+
+        nod 1150ms ease-in-out infinite 1900ms;
+
     }
 
     @keyframes eyesIn {
+
       to {
+
         opacity: 1;
+
         transform: translateY(0);
+
       }
+
     }
 
     @keyframes nod {
+
       0%, 100% { transform: translateY(0) rotate(0deg); }
+
       45% { transform: translateY(5px) rotate(1.5deg); }
+
       70% { transform: translateY(1px) rotate(0deg); }
+
     }
 
     /* 7 分人頁面 */
+
     .rating-wrap {
+
       margin: 12px 0 12px;
+
       opacity: 0;
+
       transform: translateY(8px);
+
     }
 
     .page.active .rating-wrap {
-      animation: fadeUp 520ms ease forwards 680ms;
+
+      animation: fadeUp 800ms ease forwards 900ms;
+
     }
 
     .rating-line {
+
       position: relative;
+
       width: 100%;
+
       height: 6px;
+
       border-radius: 999px;
+
       background: rgba(31, 42, 54, 0.1);
+
       overflow: hidden;
+
       margin-bottom: 10px;
+
     }
 
     .rating-fill {
+
       height: 100%;
+
       width: 100%;
+
       border-radius: 999px;
+
       background: linear-gradient(90deg, rgba(176, 138, 79, 0.28), rgba(176, 138, 79, 0.95));
+
       transform-origin: left center;
+
       transform: scaleX(0);
+
     }
 
     .page.active .rating-fill {
-      animation: fillSeven 1450ms cubic-bezier(.18,.8,.25,1) forwards 900ms;
+
+      animation: fillSeven 1800ms cubic-bezier(.18,.8,.25,1) forwards 1300ms;
+
     }
 
     @keyframes fillSeven {
+
       to { transform: scaleX(0.67); }
+
     }
 
     .rating-nums {
+
       display: grid;
+
       grid-template-columns: repeat(10, 1fr);
+
       font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+
       font-size: 11px;
+
       color: rgba(31, 42, 54, 0.42);
+
       text-align: center;
+
       letter-spacing: 0;
+
     }
 
     .page.active .rating-nums span:nth-child(7) {
-      animation: sevenGlow 520ms ease forwards 2100ms;
+
+      animation: sevenGlow 700ms ease forwards 2800ms;
+
     }
 
     @keyframes sevenGlow {
+
       to {
+
         color: var(--gold);
+
         transform: translateY(-3px) scale(1.38);
+
         font-weight: 800;
+
       }
+
     }
 
     .cert-stamp {
+
       align-self: center;
+
       margin-top: 10px;
+
       width: fit-content;
+
       padding: 6px 13px;
+
       border: 2px solid var(--gold);
+
       border-radius: 999px;
+
       color: var(--gold);
+
       font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+
       font-size: 14px;
+
       font-weight: 800;
+
       letter-spacing: 0.09em;
+
       opacity: 0;
+
       transform: rotate(-8deg) scale(1.3);
+
     }
 
     .page.active .cert-stamp {
-      animation: stampIn 440ms cubic-bezier(.18, 1.35, .35, 1) forwards 3250ms;
+
+      animation: stampIn 540ms cubic-bezier(.18, 1.35, .35, 1) forwards 4300ms;
+
     }
 
     @keyframes stampIn {
+
       0% {
+
         opacity: 0;
+
         transform: rotate(-12deg) scale(1.55);
+
         filter: blur(2px);
+
       }
+
       65% {
+
         opacity: 1;
+
         transform: rotate(-5deg) scale(0.92);
+
         filter: blur(0);
+
       }
+
       100% {
+
         opacity: 1;
+
         transform: rotate(-6deg) scale(1);
+
       }
+
     }
 
     /* 處理中 */
+
     .processing {
+
       align-self: flex-end;
+
       margin: 2px 4px 3px 0;
+
       color: rgba(31, 42, 54, 0.42);
+
       font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+
       font-size: 13px;
+
       letter-spacing: 0.08em;
+
       opacity: 0;
+
       transform: translateY(6px);
+
+      filter: blur(3px);
+
     }
 
     .page.active .processing {
+
       animation:
-        fadeUp 460ms ease forwards 1550ms,
-        blink 1.15s ease-in-out infinite 2300ms;
+
+        processingIn 850ms ease forwards 2200ms,
+
+        blink 1.15s ease-in-out infinite 3300ms;
+
+    }
+
+    @keyframes processingIn {
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+        filter: blur(0);
+
+      }
+
     }
 
     @keyframes blink {
+
       0%, 100% { opacity: 0.36; }
+
       50% { opacity: 0.9; }
+
     }
 
     /* 被記得頁面 */
+
     .memory-focus {
+
       display: inline-block;
+
       position: relative;
+
       margin: 2px 0;
+
       font-size: 1.08em;
+
       font-weight: 700;
+
     }
 
     .memory-focus::after {
+
       content: "";
+
       position: absolute;
+
       left: -4px;
+
       right: -4px;
+
       bottom: 4px;
+
       height: 9px;
+
       background: var(--gold-soft);
+
       z-index: -1;
+
       border-radius: 999px;
-    }
 
-    .stamp-area {
-      position: relative;
-      min-height: 76px;
-      margin-top: 6px;
-    }
-
-    .stamp {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%) rotate(-7deg) scale(1.35);
-      padding: 6px 12px;
-      border: 2px solid rgba(176, 138, 79, 0.86);
-      border-radius: 10px;
-      color: rgba(176, 138, 79, 0.95);
-      background: rgba(255, 250, 242, 0.78);
-      font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      opacity: 0;
-      box-shadow: 0 8px 18px rgba(176, 138, 79, 0.08);
-      white-space: nowrap;
-    }
-
-    .stamp.one {
-      top: 2px;
-    }
-
-    .stamp.two {
-      top: 38px;
-      transform: translateX(-50%) rotate(6deg) scale(1.35);
-    }
-
-    .page.active .stamp.one {
-      animation: stampOne 420ms cubic-bezier(.18, 1.35, .35, 1) forwards 2700ms;
-    }
-
-    .page.active .stamp.two {
-      animation: stampTwo 420ms cubic-bezier(.18, 1.35, .35, 1) forwards 3150ms;
-    }
-
-    @keyframes stampOne {
-      to {
-        opacity: 1;
-        transform: translateX(-50%) rotate(-7deg) scale(1);
-      }
-    }
-
-    @keyframes stampTwo {
-      to {
-        opacity: 1;
-        transform: translateX(-50%) rotate(6deg) scale(1);
-      }
     }
 
     /* Miu 貓掌 */
+
     .paw-path {
+
       position: absolute;
+
       inset: 0;
+
       pointer-events: none;
+
       z-index: 1;
+
     }
 
     .paw {
+
       position: absolute;
+
       width: 20px;
+
       height: 18px;
+
       opacity: 0;
+
       transform: rotate(-18deg) scale(0.88);
+
     }
 
     .paw i,
+
     .paw b {
+
       position: absolute;
+
       display: block;
+
       background: rgba(176, 138, 79, 0.42);
+
     }
 
     .paw i {
+
       width: 5px;
+
       height: 6px;
+
       border-radius: 50%;
+
     }
 
     .paw i:nth-child(1) { left: 1px; top: 3px; }
+
     .paw i:nth-child(2) { left: 6px; top: 0; }
+
     .paw i:nth-child(3) { left: 12px; top: 0; }
+
     .paw i:nth-child(4) { left: 17px; top: 3px; }
 
     .paw b {
+
       left: 6px;
+
       top: 8px;
+
       width: 10px;
+
       height: 8px;
+
       border-radius: 50% 50% 55% 55%;
+
     }
 
     .paw:nth-child(1) { left: 28px; bottom: 76px; }
+
     .paw:nth-child(2) { left: 64px; bottom: 112px; }
+
     .paw:nth-child(3) { left: 104px; bottom: 88px; }
+
     .paw:nth-child(4) { left: 146px; bottom: 122px; }
 
-    .page.active .paw:nth-child(1) { animation: pawIn 440ms ease forwards 2300ms; }
-    .page.active .paw:nth-child(2) { animation: pawIn 440ms ease forwards 2550ms; }
-    .page.active .paw:nth-child(3) { animation: pawIn 440ms ease forwards 2800ms; }
-    .page.active .paw:nth-child(4) { animation: pawIn 440ms ease forwards 3050ms; }
+    .page.active .paw:nth-child(1) { animation: pawIn 700ms ease forwards 2700ms; }
+
+    .page.active .paw:nth-child(2) { animation: pawIn 700ms ease forwards 3000ms; }
+
+    .page.active .paw:nth-child(3) { animation: pawIn 700ms ease forwards 3300ms; }
+
+    .page.active .paw:nth-child(4) { animation: pawIn 700ms ease forwards 3600ms; }
 
     @keyframes pawIn {
+
       to {
+
         opacity: 1;
+
         transform: translateY(0) rotate(-18deg) scale(0.9);
+
       }
+
     }
 
     /* 鐵板燒 */
+
     .teppan {
+
       position: relative;
-      width: 72px;
-      height: 52px;
-      margin: 12px auto 0;
+
+      width: 110px;
+
+      height: 64px;
+
+      margin: 14px auto 0;
+
       opacity: 0;
+
+      transform: translateY(12px);
+
     }
 
     .page.active .teppan {
-      animation: fadeUp 520ms ease forwards 1350ms;
+
+      animation: teppanIn 900ms ease forwards 2100ms;
+
     }
 
-    .plate {
+    @keyframes teppanIn {
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+      }
+
+    }
+
+    .grill {
+
       position: absolute;
-      left: 8px;
-      right: 8px;
-      bottom: 8px;
-      height: 13px;
+
+      left: 14px;
+
+      right: 26px;
+
+      bottom: 10px;
+
+      height: 20px;
+
+      border: 2px solid rgba(31, 42, 54, 0.48);
+
+      border-radius: 8px;
+
+    }
+
+    .grill::before,
+
+    .grill::after {
+
+      content: "";
+
+      position: absolute;
+
+      top: 6px;
+
+      width: 2px;
+
+      height: 8px;
+
+      background: rgba(31, 42, 54, 0.18);
+
+    }
+
+    .grill::before {
+
+      left: 28px;
+
+    }
+
+    .grill::after {
+
+      left: 56px;
+
+    }
+
+    .food {
+
+      position: absolute;
+
+      bottom: 18px;
+
+      width: 10px;
+
+      height: 7px;
+
+      background: rgba(176, 138, 79, 0.62);
+
+      border-radius: 50%;
+
+    }
+
+    .food.f1 { left: 28px; }
+
+    .food.f2 { left: 44px; }
+
+    .food.f3 { left: 60px; }
+
+    .spatula {
+
+      position: absolute;
+
+      right: 6px;
+
+      bottom: 15px;
+
+      width: 18px;
+
+      height: 3px;
+
+      background: rgba(31, 42, 54, 0.46);
+
+      transform: rotate(-28deg);
+
+      transform-origin: right center;
+
+      border-radius: 2px;
+
+    }
+
+    .spatula::before {
+
+      content: "";
+
+      position: absolute;
+
+      left: -8px;
+
+      top: -5px;
+
+      width: 10px;
+
+      height: 10px;
+
       border: 2px solid rgba(31, 42, 54, 0.46);
-      border-top: none;
-      border-radius: 0 0 16px 16px;
+
+      border-right: none;
+
+      border-radius: 3px 0 0 3px;
+
     }
 
     .steam {
+
       position: absolute;
-      bottom: 25px;
+
+      bottom: 34px;
+
       width: 10px;
-      height: 28px;
-      border-left: 2px solid rgba(176, 138, 79, 0.65);
+
+      height: 24px;
+
+      border-left: 2px solid rgba(176, 138, 79, 0.58);
+
       border-radius: 50%;
+
       opacity: 0;
+
     }
 
-    .steam.s1 { left: 21px; }
-    .steam.s2 { left: 35px; height: 33px; }
-    .steam.s3 { left: 49px; }
+    .steam.s1 { left: 34px; }
+
+    .steam.s2 { left: 50px; height: 28px; }
+
+    .steam.s3 { left: 66px; }
 
     .page.active .steam {
-      animation: steamUp 1450ms ease-in-out infinite;
+
+      animation: steamUp 1500ms ease-in-out infinite;
+
     }
 
     .page.active .steam.s2 { animation-delay: 180ms; }
+
     .page.active .steam.s3 { animation-delay: 360ms; }
 
     @keyframes steamUp {
+
       0% {
+
         opacity: 0;
+
         transform: translateY(8px) scaleY(0.85);
+
       }
+
       35% {
-        opacity: 0.75;
+
+        opacity: 0.72;
+
       }
+
       100% {
+
         opacity: 0;
-        transform: translateY(-10px) scaleY(1.1);
+
+        transform: translateY(-10px) scaleY(1.08);
+
       }
+
     }
 
     /* 進度點 */
+
     .dots {
+
       position: fixed;
+
       left: 50%;
+
       bottom: max(12px, env(safe-area-inset-bottom));
+
       transform: translateX(-50%) scale(0.86);
+
       z-index: 10;
+
       display: flex;
+
       gap: 6px;
+
       padding: 7px 9px;
+
       border-radius: 999px;
+
       background: rgba(255, 250, 242, 0.72);
+
       backdrop-filter: blur(10px);
+
       border: 1px solid rgba(31, 42, 54, 0.06);
+
       pointer-events: none;
+
     }
 
     .dot {
+
       width: 6px;
+
       height: 6px;
+
       border-radius: 999px;
+
       background: rgba(31, 42, 54, 0.2);
+
       transition: all 240ms ease;
+
     }
 
     .dot.active {
+
       width: 18px;
+
       background: var(--gold);
+
     }
 
     .hint {
+
       position: fixed;
+
       left: 50%;
+
       bottom: calc(max(12px, env(safe-area-inset-bottom)) + 34px);
+
       transform: translateX(-50%);
+
       z-index: 9;
+
       font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+
       font-size: 12px;
+
       letter-spacing: 0.12em;
+
       color: rgba(31, 42, 54, 0.35);
+
       opacity: 0;
+
       animation: hintInOut 3s ease forwards 900ms;
+
       pointer-events: none;
+
       white-space: nowrap;
+
     }
 
     @keyframes hintInOut {
+
       0% { opacity: 0; transform: translateX(-50%) translateY(4px); }
+
       25% { opacity: 1; transform: translateX(-50%) translateY(0); }
+
       75% { opacity: 1; transform: translateX(-50%) translateY(0); }
+
       100% { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+
     }
 
     @media (max-height: 650px) {
+
       .card {
+
         height: calc(var(--app-height) - 96px);
+
         min-height: 470px;
+
         padding: 28px 25px;
+
       }
 
       .text {
+
         font-size: clamp(20px, 5vw, 24px);
+
         line-height: 1.62;
+
       }
 
       .small-text {
+
         font-size: clamp(17px, 4.35vw, 21px);
+
         line-height: 1.5;
+
       }
 
       .long .small-text {
+
         font-size: clamp(15.5px, 4vw, 19px);
+
         line-height: 1.42;
+
       }
 
       .spacer {
+
         height: 12px;
+
       }
 
       .long .spacer {
+
         height: 7px;
+
       }
 
       .cert-stamp {
+
         margin-top: 6px;
+
       }
+
     }
 
     @media (max-width: 360px) {
+
       .page {
+
         padding-left: 14px;
+
         padding-right: 14px;
+
       }
 
       .card {
+
         padding-left: 22px;
+
         padding-right: 22px;
+
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
+
   <main class="deck" id="deck">
 
     <!-- 封面 -->
+
     <section class="page active">
+
       <div class="card">
+
         <div class="content center">
+
           <div class="hello">hi 你好</div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 1 頁 -->
+
     <section class="page">
+
       <div class="card">
+
         <div class="content">
+
           <div class="text">
-            <div class="line" style="--d: 120ms;">今天要介紹的這一位，</div>
-            <div class="line" style="--d: 420ms;">是一位平常話不多，</div>
-            <div class="line" style="--d: 720ms;">但很常出現在我的故事裡的人。</div>
+
+            <div class="line" style="--d: 180ms;">今天要介紹的這一位，</div>
+
+            <div class="line" style="--d: 700ms;">是一位平常話不多，</div>
+
+            <div class="line" style="--d: 1220ms;">但很常出現在我的故事裡的人。</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 2 頁 -->
+
     <section class="page">
+
       <div class="card">
+
         <div class="eyes">◉ ◉</div>
+
         <div class="content">
+
           <div class="text">
-            <div class="line" style="--d: 120ms;">他的常見回覆是：</div>
-            <div class="line quote-big" style="--d: 420ms;">「嗯。」</div>
-            <div class="line" style="--d: 850ms;">伴隨著睜大圓圓的眼睛，</div>
-            <div class="line" style="--d: 1150ms;">然後點頭。</div>
+
+            <div class="line" style="--d: 180ms;">他的常見回覆是：</div>
+
+            <div class="line quote-big" style="--d: 720ms;">「嗯。」</div>
+
+            <div class="line" style="--d: 1400ms;">伴隨著睜大圓圓的眼睛，</div>
+
+            <div class="line" style="--d: 1920ms;">然後點頭。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 1550ms;">使用頻率非常高，</div>
-            <div class="line" style="--d: 1850ms;">用途非常廣。</div>
+
+            <div class="line" style="--d: 2550ms;">使用頻率非常高，</div>
+
+            <div class="line" style="--d: 3070ms;">用途非常廣。</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 3 頁：7 分人 -->
+
     <section class="page long">
+
       <div class="card">
+
         <div class="content">
+
           <div class="small-text">
-            <div class="line" style="--d: 100ms;">他平常對食物的喜好，</div>
-            <div class="line" style="--d: 300ms;">如果用 1 到 10 分來說，</div>
+
+            <div class="line" style="--d: 160ms;">他平常對食物的喜好，</div>
+
+            <div class="line" style="--d: 600ms;">如果用 1 到 10 分來說，</div>
 
             <div class="rating-wrap">
+
               <div class="rating-line">
+
                 <div class="rating-fill"></div>
+
               </div>
+
               <div class="rating-nums">
+
                 <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+
                 <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+
               </div>
+
             </div>
 
-            <div class="line" style="--d: 1450ms;">大部分都是 <span class="gold em">7 分。</span></div>
+            <div class="line" style="--d: 2000ms;">大部分都是 <span class="gold em">7 分。</span></div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 1700ms;">7 分對他而言，</div>
-            <div class="line" style="--d: 1950ms;">是一個可以接受，</div>
-            <div class="line" style="--d: 2200ms;">但還不到超級滿意的分數。</div>
+
+            <div class="line" style="--d: 2500ms;">7 分對他而言，</div>
+
+            <div class="line" style="--d: 2960ms;">是一個可以接受，</div>
+
+            <div class="line" style="--d: 3420ms;">但還不到超級滿意的分數。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 2550ms;">原來他不是5分人也不是8分人</div>
-            <div class="line em" style="--d: 2850ms;">是7分人</div>
+
+            <div class="line" style="--d: 3980ms;">原來他不是5分人也不是8分人</div>
+
+            <div class="line em" style="--d: 4500ms;">是7分人</div>
 
             <div class="cert-stamp">7 分人認證</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 4 頁 -->
+
     <section class="page">
+
       <div class="card">
+
         <div class="content">
+
           <div class="text">
-            <div class="line" style="--d: 120ms;">他不太追求儀式感。</div>
+
+            <div class="line" style="--d: 180ms;">他不太追求儀式感。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 620ms;">對他來說，</div>
-            <div class="line" style="--d: 920ms;">簡單、舒服、剛剛好，</div>
-            <div class="line" style="--d: 1220ms;">就蠻 OK 了。</div>
+
+            <div class="line" style="--d: 850ms;">對他來說，</div>
+
+            <div class="line" style="--d: 1370ms;">簡單、舒服、剛剛好，</div>
+
+            <div class="line" style="--d: 1890ms;">就蠻 OK 了。</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 5 頁：處理中 -->
+
     <section class="page long">
+
       <div class="card">
+
         <div class="content">
+
           <div class="small-text">
-            <div class="line" style="--d: 100ms;">他還有一個特色是：</div>
+
+            <div class="line" style="--d: 160ms;">他還有一個特色是：</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 420ms;">看起來情緒很穩定，</div>
-            <div class="line" style="--d: 700ms;">好像聽到什麼事都很淡定。</div>
+
+            <div class="line" style="--d: 720ms;">看起來情緒很穩定，</div>
+
+            <div class="line" style="--d: 1240ms;">好像聽到什麼事都很淡定。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 1100ms;">但其實，</div>
+
+            <div class="line" style="--d: 1800ms;">但其實，</div>
+
             <div class="processing">……處理中</div>
-            <div class="line" style="--d: 2250ms;">有時候只是反應沒有那麼快。</div>
+
+            <div class="line" style="--d: 3300ms;">有時候只是反應沒有那麼快。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 2600ms;">他長得一臉和善，</div>
-            <div class="line" style="--d: 2900ms;">但內心有自己一定的堅持。</div>
+
+            <div class="line" style="--d: 3860ms;">他長得一臉和善，</div>
+
+            <div class="line" style="--d: 4380ms;">但內心有自己一定的堅持。</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 6 頁：被記得 -->
-    <section class="page long">
-      <div class="card">
-        <div class="content">
-          <div class="small-text center">
-            <div class="line" style="--d: 100ms;">但有趣的是，</div>
-            <div class="line" style="--d: 300ms;">這個人曾經說過：</div>
-            <div class="spacer"></div>
-            <div class="line" style="--d: 650ms;">「現在會記得別人生日的人很少了。」</div>
-            <div class="spacer"></div>
-            <div class="line" style="--d: 1050ms;">所以今天這件事，</div>
-            <div class="line" style="--d: 1300ms;">要特別註明一下：</div>
-            <div class="spacer"></div>
-            <div class="line memory-focus" style="--d: 1650ms;">他有被記得。</div>
-            <div class="spacer"></div>
-            <div class="line" style="--d: 2050ms;">而且不是手機提醒那種記得。</div>
-            <div class="line" style="--d: 2300ms;">是真的有人記得。</div>
 
-            <div class="stamp-area" aria-hidden="true">
-              <div class="stamp one">不是手機提醒</div>
-              <div class="stamp two">是真的有人記得</div>
-            </div>
+    <section class="page long">
+
+      <div class="card">
+
+        <div class="content">
+
+          <div class="small-text center">
+
+            <div class="line" style="--d: 160ms;">但有趣的是，</div>
+
+            <div class="line" style="--d: 600ms;">這個人曾經說過：</div>
+
+            <div class="spacer"></div>
+
+            <div class="line" style="--d: 1200ms;">「現在會記得別人生日的人很少了。」</div>
+
+            <div class="spacer"></div>
+
+            <div class="line" style="--d: 1950ms;">所以今天這件事，</div>
+
+            <div class="line" style="--d: 2450ms;">要特別註明一下：</div>
+
+            <div class="spacer"></div>
+
+            <div class="line memory-focus" style="--d: 3150ms;">他有被記得。</div>
+
+            <div class="spacer"></div>
+
+            <div class="line" style="--d: 3850ms;">而且不是手機提醒那種記得。</div>
+
+            <div class="line" style="--d: 4350ms;">是真的有人記得。</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 7 頁 -->
+
     <section class="page long">
+
       <div class="card">
+
         <div class="content">
+
           <div class="small-text">
-            <div class="line" style="--d: 100ms;">他不是很適合太感人的禮物。</div>
+
+            <div class="line" style="--d: 160ms;">他不是很適合太感人的禮物。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 520ms;">照片太多，他可能會尷尬。</div>
-            <div class="line" style="--d: 800ms;">文字太深，他可能會沉默。</div>
-            <div class="line" style="--d: 1080ms;">太用力祝福，他可能不知道要回什麼。</div>
+
+            <div class="line" style="--d: 800ms;">照片太多，他可能會尷尬。</div>
+
+            <div class="line" style="--d: 1320ms;">文字太深，他可能會沉默。</div>
+
+            <div class="line" style="--d: 1840ms;">太用力祝福，他可能不知道要回什麼。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 1500ms;">所以只要讓他知道：</div>
+
+            <div class="line" style="--d: 2500ms;">所以只要讓他知道：</div>
+
             <div class="spacer"></div>
-            <div class="line em" style="--d: 1900ms;">有人記得他生日</div>
-            <div class="line em" style="--d: 2200ms;">就好。</div>
+
+            <div class="line em" style="--d: 3150ms;">有人記得他生日</div>
+
+            <div class="line em" style="--d: 3670ms;">就好。</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 8 頁：Miu -->
+
     <section class="page long">
+
       <div class="card">
+
         <div class="paw-path" aria-hidden="true">
+
           <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
+
           <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
+
           <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
+
           <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
+
         </div>
 
         <div class="content">
+
           <div class="small-text">
-            <div class="line" style="--d: 100ms;">希望這位壽星今年：</div>
+
+            <div class="line" style="--d: 160ms;">希望這位壽星今年：</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 520ms;">工作多一點有趣的事，</div>
-            <div class="line" style="--d: 800ms;">生活多一點開心的事，</div>
-            <div class="line" style="--d: 1080ms;">身體平安健康。</div>
+
+            <div class="line" style="--d: 800ms;">工作多一點有趣的事，</div>
+
+            <div class="line" style="--d: 1320ms;">生活多一點開心的事，</div>
+
+            <div class="line" style="--d: 1840ms;">身體平安健康。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 1500ms;">還有，</div>
-            <div class="line em" style="--d: 1850ms;">Miu 也要健健康康的。</div>
+
+            <div class="line" style="--d: 2500ms;">還有，</div>
+
+            <div class="line em" style="--d: 3150ms;">Miu 也要健健康康的。</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 9 頁 -->
+
     <section class="page long">
+
       <div class="card">
+
         <div class="content">
+
           <div class="small-text">
-            <div class="line" style="--d: 100ms;">最後正式介紹一次：</div>
+
+            <div class="line" style="--d: 160ms;">最後正式介紹一次：</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 500ms;">這位是 6/30 的壽星。</div>
+
+            <div class="line" style="--d: 800ms;">這位是 6/30 的壽星。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 900ms;">沒辦法做什麼定義，</div>
-            <div class="line" style="--d: 1180ms;">因為認識了兩年，</div>
-            <div class="line" style="--d: 1460ms;">到現在還是在了解他的過程。</div>
+
+            <div class="line" style="--d: 1400ms;">沒辦法做什麼定義，</div>
+
+            <div class="line" style="--d: 1920ms;">因為認識了兩年，</div>
+
+            <div class="line" style="--d: 2440ms;">到現在還是在了解他的過程。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 1900ms;">低調、實際、話不多，</div>
-            <div class="line" style="--d: 2200ms;">但能肯定的是，</div>
-            <div class="line em" style="--d: 2550ms;">他是一個心很善良、</div>
-            <div class="line em" style="--d: 2850ms;">也很溫柔的人。</div>
+
+            <div class="line" style="--d: 3100ms;">低調、實際、話不多，</div>
+
+            <div class="line" style="--d: 3620ms;">但能肯定的是，</div>
+
+            <div class="line em" style="--d: 4240ms;">他是一個心很善良、</div>
+
+            <div class="line em" style="--d: 4760ms;">也很溫柔的人。</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
     <!-- 第 10 頁 -->
+
     <section class="page">
+
       <div class="card">
+
         <div class="content center">
+
           <div class="text">
-            <div class="line" style="--d: 120ms;">一直以來，</div>
-            <div class="line" style="--d: 420ms;">謝謝你的包容與陪伴。</div>
+
+            <div class="line" style="--d: 180ms;">一直以來，</div>
+
+            <div class="line" style="--d: 760ms;">謝謝你的包容與陪伴。</div>
+
             <div class="spacer"></div>
-            <div class="line" style="--d: 850ms;">祝你明天的鐵板燒吃得愉快。</div>
+
+            <div class="line" style="--d: 1500ms;">祝你明天的鐵板燒吃得愉快。</div>
 
             <div class="teppan" aria-hidden="true">
+
               <div class="steam s1"></div>
+
               <div class="steam s2"></div>
+
               <div class="steam s3"></div>
-              <div class="plate"></div>
+
+              <div class="grill"></div>
+
+              <div class="food f1"></div>
+
+              <div class="food f2"></div>
+
+              <div class="food f3"></div>
+
+              <div class="spatula"></div>
+
             </div>
 
             <div class="spacer"></div>
-            <div class="line em" style="--d: 1700ms;">生日快樂。</div>
+
+            <div class="line em" style="--d: 3000ms;">生日快樂。</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
   </main>
 
   <div class="hint">左右滑動</div>
+
   <div class="dots" id="dots"></div>
 
   <script>
+
     const pages = Array.from(document.querySelectorAll(".page"));
+
     const dotsWrap = document.getElementById("dots");
+
     const deck = document.getElementById("deck");
 
     let current = 0;
+
     let startX = 0;
+
     let startY = 0;
+
     let isDragging = false;
 
     function setAppHeight() {
+
       const height = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+
       document.documentElement.style.setProperty("--app-height", `${height}px`);
+
     }
 
     setAppHeight();
 
     if (window.visualViewport) {
+
       window.visualViewport.addEventListener("resize", setAppHeight);
+
       window.visualViewport.addEventListener("scroll", setAppHeight);
+
     }
 
     window.addEventListener("resize", setAppHeight);
 
     pages.forEach((_, index) => {
+
       const dot = document.createElement("div");
+
       dot.className = "dot";
+
       if (index === 0) dot.classList.add("active");
+
       dotsWrap.appendChild(dot);
+
     });
 
     const dots = Array.from(document.querySelectorAll(".dot"));
 
     function restartAnimations(page) {
-      const animated = page.querySelectorAll(".line, .hello, .rating-wrap, .rating-fill, .cert-stamp, .processing, .stamp, .paw, .teppan, .steam, .eyes");
+
+      const animated = page.querySelectorAll(
+
+        ".line, .hello, .rating-wrap, .rating-fill, .cert-stamp, .processing, .paw, .teppan, .steam, .eyes"
+
+      );
+
       animated.forEach((el) => {
+
         el.style.animation = "none";
+
         el.offsetHeight;
+
         el.style.animation = "";
+
       });
+
     }
 
     function updatePages() {
+
       pages.forEach((page, index) => {
+
         page.classList.remove("active", "prev");
 
         if (index < current) {
+
           page.classList.add("prev");
+
         }
 
         if (index === current) {
+
           page.classList.add("active");
+
           restartAnimations(page);
+
         }
+
       });
 
       dots.forEach((dot, index) => {
+
         dot.classList.toggle("active", index === current);
+
       });
+
     }
 
     function goNext() {
+
       if (current < pages.length - 1) {
+
         current += 1;
+
         updatePages();
+
       }
+
     }
 
     function goPrev() {
+
       if (current > 0) {
+
         current -= 1;
+
         updatePages();
+
       }
+
     }
 
     deck.addEventListener("touchstart", (e) => {
+
       startX = e.touches[0].clientX;
+
       startY = e.touches[0].clientY;
+
       isDragging = true;
+
     }, { passive: true });
 
     deck.addEventListener("touchend", (e) => {
+
       if (!isDragging) return;
 
       const endX = e.changedTouches[0].clientX;
+
       const endY = e.changedTouches[0].clientY;
+
       const diffX = endX - startX;
+
       const diffY = endY - startY;
 
       if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+
         if (diffX < 0) {
+
           goNext();
+
         } else {
+
           goPrev();
+
         }
+
       }
 
       isDragging = false;
+
     }, { passive: true });
 
     window.addEventListener("keydown", (e) => {
+
       if (e.key === "ArrowRight") goNext();
+
       if (e.key === "ArrowLeft") goPrev();
+
     });
 
     deck.addEventListener("mousedown", (e) => {
+
       startX = e.clientX;
+
       startY = e.clientY;
+
       isDragging = true;
+
     });
 
     deck.addEventListener("mouseup", (e) => {
+
       if (!isDragging) return;
 
       const diffX = e.clientX - startX;
+
       const diffY = e.clientY - startY;
 
       if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+
         if (diffX < 0) {
+
           goNext();
+
         } else {
+
           goPrev();
+
         }
+
       }
 
       isDragging = false;
+
     });
 
     updatePages();
+
   </script>
+
 </body>
+
 </html>
