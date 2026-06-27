@@ -26,7 +26,7 @@
 
       --gold-soft: rgba(176, 138, 79, 0.16);
 
-      --gold-faint: rgba(176, 138, 79, 0.42);
+      --gold-faint: rgba(176, 138, 79, 0.38);
 
       --shadow: 0 18px 45px rgba(31, 42, 54, 0.12);
 
@@ -274,6 +274,16 @@
 
     }
 
+    .memory-page .content,
+
+    .gift-page .content {
+
+      justify-content: center;
+
+      padding-top: 0;
+
+    }
+
     .text {
 
       font-size: clamp(21px, 5.4vw, 27px);
@@ -309,6 +319,22 @@
       line-height: 1.5;
 
       letter-spacing: 0.028em;
+
+    }
+
+    .memory-page .small-text {
+
+      font-size: clamp(16.2px, 4.2vw, 20px);
+
+      line-height: 1.46;
+
+    }
+
+    .gift-page .small-text {
+
+      font-size: clamp(17.5px, 4.5vw, 22px);
+
+      line-height: 1.58;
 
     }
 
@@ -357,6 +383,18 @@
     .long .spacer {
 
       height: 10px;
+
+    }
+
+    .gift-space {
+
+      height: 16px;
+
+    }
+
+    .gift-space.large {
+
+      height: 22px;
 
     }
 
@@ -802,13 +840,13 @@
 
     .memory-space {
 
-      height: 18px;
+      height: 12px;
 
     }
 
     .memory-space.large {
 
-      height: 24px;
+      height: 16px;
 
     }
 
@@ -864,11 +902,17 @@
 
       width: 100%;
 
-      margin: 6px 0 10px;
+      min-height: 118px;
 
-      padding: 24px 16px 30px;
+      margin: 12px 0 14px;
 
-      text-align: center;
+      padding: 16px 6px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
 
       opacity: 0;
 
@@ -878,7 +922,7 @@
 
     .page.active .memory-quote {
 
-      animation: quoteBoxIn 950ms cubic-bezier(.22,.61,.36,1) forwards 1800ms;
+      animation: quoteBoxIn 950ms cubic-bezier(.22,.61,.36,1) forwards 1700ms;
 
     }
 
@@ -904,13 +948,13 @@
 
     .quote-mark {
 
-      display: block;
-
-      width: 100%;
+      position: absolute;
 
       line-height: 0.8;
 
       color: var(--gold-faint);
+
+      font-size: 72px;
 
       font-weight: 900;
 
@@ -924,41 +968,35 @@
 
     .quote-mark.open {
 
-      text-align: left;
+      left: 24px;
 
-      font-size: 82px;
-
-      margin-bottom: -6px;
-
-      padding-left: 6px;
+      top: -2px;
 
     }
 
     .quote-mark.close {
 
-      text-align: right;
+      right: 24px;
 
-      font-size: 82px;
-
-      margin-top: -2px;
-
-      padding-right: 6px;
+      bottom: -4px;
 
     }
 
     .quote-text-center {
 
+      width: 86%;
+
+      margin: 0 auto;
+
       font-size: 1.02em;
 
-      line-height: 1.68;
+      line-height: 1.55;
 
-      font-weight: 700;
+      font-weight: 760;
 
       letter-spacing: 0.03em;
 
       text-align: center;
-
-      padding: 0 10px;
 
     }
 
@@ -1398,6 +1436,22 @@
 
       }
 
+      .memory-page .small-text {
+
+        font-size: clamp(15.2px, 3.9vw, 18.6px);
+
+        line-height: 1.36;
+
+      }
+
+      .gift-page .small-text {
+
+        font-size: clamp(16px, 4.1vw, 20px);
+
+        line-height: 1.44;
+
+      }
+
       .spacer {
 
         height: 12px;
@@ -1418,15 +1472,41 @@
 
       .memory-space.large {
 
-        height: 18px;
+        height: 12px;
 
       }
 
-      .quote-mark.open,
+      .memory-quote {
 
-      .quote-mark.close {
+        min-height: 98px;
 
-        font-size: 70px;
+        margin: 8px 0 10px;
+
+      }
+
+      .quote-mark {
+
+        font-size: 60px;
+
+      }
+
+      .quote-text-center {
+
+        font-size: 0.98em;
+
+        line-height: 1.42;
+
+      }
+
+      .gift-space {
+
+        height: 12px;
+
+      }
+
+      .gift-space.large {
+
+        height: 16px;
 
       }
 
@@ -1456,11 +1536,21 @@
 
       }
 
-      .quote-mark.open,
+      .quote-mark {
+
+        font-size: 58px;
+
+      }
+
+      .quote-mark.open {
+
+        left: 18px;
+
+      }
 
       .quote-mark.close {
 
-        font-size: 66px;
+        right: 18px;
 
       }
 
@@ -1674,8 +1764,6 @@
 
             <div class="line" style="--d: 900ms;">這個人曾經說過：</div>
 
-            <div class="spacer"></div>
-
             <div class="memory-quote">
 
               <span class="quote-mark open">“</span>
@@ -1686,23 +1774,21 @@
 
             </div>
 
-            <div class="memory-space"></div>
+            <div class="line" style="--d: 3100ms;">所以今天這件事，</div>
 
-            <div class="line" style="--d: 3200ms;">所以今天這件事，</div>
-
-            <div class="line" style="--d: 3900ms;">要特別註明一下：</div>
+            <div class="line" style="--d: 3800ms;">要特別註明一下：</div>
 
             <div class="memory-space large"></div>
 
-            <div class="line memory-focus" style="--d: 4900ms;">他有被記得。</div>
+            <div class="line memory-focus" style="--d: 4800ms;">他有被記得。</div>
 
             <div class="memory-space large"></div>
 
-            <div class="line" style="--d: 6000ms;">而且不是手機提醒那種記得。</div>
+            <div class="line" style="--d: 5900ms;">而且不是手機提醒那種記得。</div>
 
             <div class="memory-space"></div>
 
-            <div class="line soft-point" style="--d: 6700ms;">是真的有人記得。</div>
+            <div class="line soft-point" style="--d: 6600ms;">是真的有人記得。</div>
 
           </div>
 
@@ -1712,7 +1798,7 @@
 
     </section>
 
-    <section class="page long">
+    <section class="page long gift-page">
 
       <div class="card">
 
@@ -1722,7 +1808,7 @@
 
             <div class="line" style="--d: 180ms;">他不是很適合太感人的禮物。</div>
 
-            <div class="spacer"></div>
+            <div class="gift-space"></div>
 
             <div class="line" style="--d: 900ms;">照片太多，他可能會尷尬。</div>
 
@@ -1730,11 +1816,11 @@
 
             <div class="line" style="--d: 2500ms;">太用力祝福，他可能不知道要回什麼。</div>
 
-            <div class="spacer"></div>
+            <div class="gift-space large"></div>
 
             <div class="line" style="--d: 3400ms;">所以只要讓他知道：</div>
 
-            <div class="spacer"></div>
+            <div class="gift-space"></div>
 
             <div class="line" style="--d: 4400ms;"><span class="big-point">有人記得他生日</span></div>
 
