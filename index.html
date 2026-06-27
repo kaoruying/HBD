@@ -22,13 +22,9 @@
 
       --text: #1f2a36;
 
-      --muted: #8a8177;
-
       --gold: #b08a4f;
 
       --gold-soft: rgba(176, 138, 79, 0.16);
-
-      --line: rgba(31, 42, 54, 0.13);
 
       --shadow: 0 18px 45px rgba(31, 42, 54, 0.12);
 
@@ -88,7 +84,7 @@
 
       pointer-events: none;
 
-      opacity: 0.28;
+      opacity: 0.26;
 
       background-image:
 
@@ -306,15 +302,13 @@
 
       opacity: 0;
 
-      transform: translateY(18px);
-
-      filter: blur(4px);
+      transform: translateY(16px);
 
     }
 
     .page.active .line {
 
-      animation: lineFadeUp 980ms cubic-bezier(.22,.61,.36,1) forwards;
+      animation: lineFadeUp 900ms cubic-bezier(.22,.61,.36,1) forwards;
 
       animation-delay: var(--d, 0ms);
 
@@ -326,25 +320,9 @@
 
         opacity: 0;
 
-        transform: translateY(18px);
-
-        filter: blur(4px);
+        transform: translateY(16px);
 
       }
-
-      to {
-
-        opacity: 1;
-
-        transform: translateY(0);
-
-        filter: blur(0);
-
-      }
-
-    }
-
-    @keyframes fadeUp {
 
       to {
 
@@ -394,13 +372,31 @@
 
       transform: translateY(14px);
 
-      filter: blur(4px);
-
     }
 
     .page.active .hello {
 
-      animation: lineFadeUp 1100ms cubic-bezier(.22,.61,.36,1) forwards 250ms;
+      animation: helloFade 1100ms cubic-bezier(.22,.61,.36,1) forwards 250ms;
+
+    }
+
+    @keyframes helloFade {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(14px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+      }
 
     }
 
@@ -450,13 +446,21 @@
 
       animation:
 
-        eyesIn 700ms ease forwards 1200ms,
+        eyesIn 700ms ease forwards 1600ms,
 
-        nod 1150ms ease-in-out infinite 1900ms;
+        nod 1150ms ease-in-out infinite 2400ms;
 
     }
 
     @keyframes eyesIn {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(-6px);
+
+      }
 
       to {
 
@@ -492,7 +496,19 @@
 
     .page.active .rating-wrap {
 
-      animation: fadeUp 800ms ease forwards 900ms;
+      animation: ratingShow 900ms ease forwards 1400ms;
+
+    }
+
+    @keyframes ratingShow {
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+      }
 
     }
 
@@ -532,7 +548,7 @@
 
     .page.active .rating-fill {
 
-      animation: fillSeven 1800ms cubic-bezier(.18,.8,.25,1) forwards 1300ms;
+      animation: fillSeven 2400ms cubic-bezier(.18,.8,.25,1) forwards 2000ms;
 
     }
 
@@ -562,7 +578,7 @@
 
     .page.active .rating-nums span:nth-child(7) {
 
-      animation: sevenGlow 700ms ease forwards 2800ms;
+      animation: sevenGlow 700ms ease forwards 4500ms;
 
     }
 
@@ -584,7 +600,7 @@
 
       align-self: center;
 
-      margin-top: 10px;
+      margin-top: 12px;
 
       width: fit-content;
 
@@ -612,7 +628,7 @@
 
     .page.active .cert-stamp {
 
-      animation: stampIn 540ms cubic-bezier(.18, 1.35, .35, 1) forwards 4300ms;
+      animation: stampIn 620ms cubic-bezier(.18, 1.35, .35, 1) forwards 7600ms;
 
     }
 
@@ -624,8 +640,6 @@
 
         transform: rotate(-12deg) scale(1.55);
 
-        filter: blur(2px);
-
       }
 
       65% {
@@ -633,8 +647,6 @@
         opacity: 1;
 
         transform: rotate(-5deg) scale(0.92);
-
-        filter: blur(0);
 
       }
 
@@ -652,55 +664,81 @@
 
     .processing {
 
-      align-self: flex-end;
+      align-self: flex-start;
 
-      margin: 2px 4px 3px 0;
+      margin: 8px 0 10px 0;
 
       color: rgba(31, 42, 54, 0.42);
 
       font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
 
-      font-size: 13px;
+      font-size: 22px;
+
+      font-weight: 700;
 
       letter-spacing: 0.08em;
 
       opacity: 0;
 
-      transform: translateY(6px);
-
-      filter: blur(3px);
+      transform: translateY(8px);
 
     }
 
     .page.active .processing {
 
-      animation:
-
-        processingIn 850ms ease forwards 2200ms,
-
-        blink 1.15s ease-in-out infinite 3300ms;
+      animation: processingSequence 3000ms ease forwards 2400ms;
 
     }
 
-    @keyframes processingIn {
+    @keyframes processingSequence {
 
-      to {
+      0% {
+
+        opacity: 0;
+
+        transform: translateY(8px);
+
+      }
+
+      15% {
 
         opacity: 1;
 
         transform: translateY(0);
 
-        filter: blur(0);
+      }
+
+      30% {
+
+        opacity: 0.2;
 
       }
 
-    }
+      42% {
 
-    @keyframes blink {
+        opacity: 1;
 
-      0%, 100% { opacity: 0.36; }
+      }
 
-      50% { opacity: 0.9; }
+      55% {
+
+        opacity: 0.2;
+
+      }
+
+      68% {
+
+        opacity: 1;
+
+      }
+
+      100% {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+      }
 
     }
 
@@ -742,101 +780,121 @@
 
     }
 
-    /* Miu 貓掌 */
+    /* Miu 腳印 */
 
-    .paw-path {
+    .paw-inline {
 
-      position: absolute;
+      display: flex;
 
-      inset: 0;
+      gap: 12px;
 
-      pointer-events: none;
+      margin-top: 12px;
 
-      z-index: 1;
+      margin-left: 4px;
 
-    }
-
-    .paw {
-
-      position: absolute;
-
-      width: 20px;
-
-      height: 18px;
+      align-items: center;
 
       opacity: 0;
 
-      transform: rotate(-18deg) scale(0.88);
+    }
+
+    .page.active .paw-inline {
+
+      animation: pawsWrapIn 700ms ease forwards 4300ms;
 
     }
 
-    .paw i,
-
-    .paw b {
-
-      position: absolute;
-
-      display: block;
-
-      background: rgba(176, 138, 79, 0.42);
-
-    }
-
-    .paw i {
-
-      width: 5px;
-
-      height: 6px;
-
-      border-radius: 50%;
-
-    }
-
-    .paw i:nth-child(1) { left: 1px; top: 3px; }
-
-    .paw i:nth-child(2) { left: 6px; top: 0; }
-
-    .paw i:nth-child(3) { left: 12px; top: 0; }
-
-    .paw i:nth-child(4) { left: 17px; top: 3px; }
-
-    .paw b {
-
-      left: 6px;
-
-      top: 8px;
-
-      width: 10px;
-
-      height: 8px;
-
-      border-radius: 50% 50% 55% 55%;
-
-    }
-
-    .paw:nth-child(1) { left: 28px; bottom: 76px; }
-
-    .paw:nth-child(2) { left: 64px; bottom: 112px; }
-
-    .paw:nth-child(3) { left: 104px; bottom: 88px; }
-
-    .paw:nth-child(4) { left: 146px; bottom: 122px; }
-
-    .page.active .paw:nth-child(1) { animation: pawIn 700ms ease forwards 2700ms; }
-
-    .page.active .paw:nth-child(2) { animation: pawIn 700ms ease forwards 3000ms; }
-
-    .page.active .paw:nth-child(3) { animation: pawIn 700ms ease forwards 3300ms; }
-
-    .page.active .paw:nth-child(4) { animation: pawIn 700ms ease forwards 3600ms; }
-
-    @keyframes pawIn {
+    @keyframes pawsWrapIn {
 
       to {
 
         opacity: 1;
 
-        transform: translateY(0) rotate(-18deg) scale(0.9);
+      }
+
+    }
+
+    .paw-mark {
+
+      position: relative;
+
+      width: 24px;
+
+      height: 22px;
+
+      transform: rotate(-18deg) scale(0.88);
+
+      opacity: 0;
+
+    }
+
+    .paw-mark i,
+
+    .paw-mark b {
+
+      position: absolute;
+
+      display: block;
+
+      background: rgba(176, 138, 79, 0.48);
+
+    }
+
+    .paw-mark i {
+
+      width: 6px;
+
+      height: 7px;
+
+      border-radius: 50%;
+
+    }
+
+    .paw-mark i:nth-child(1) { left: 1px; top: 4px; }
+
+    .paw-mark i:nth-child(2) { left: 7px; top: 0; }
+
+    .paw-mark i:nth-child(3) { left: 14px; top: 0; }
+
+    .paw-mark i:nth-child(4) { left: 20px; top: 4px; }
+
+    .paw-mark b {
+
+      left: 7px;
+
+      top: 10px;
+
+      width: 12px;
+
+      height: 9px;
+
+      border-radius: 50% 50% 55% 55%;
+
+    }
+
+    .page.active .paw-mark:nth-child(1) { animation: pawIn 500ms ease forwards 4450ms; }
+
+    .page.active .paw-mark:nth-child(2) { animation: pawIn 500ms ease forwards 4650ms; }
+
+    .page.active .paw-mark:nth-child(3) { animation: pawIn 500ms ease forwards 4850ms; }
+
+    .page.active .paw-mark:nth-child(4) { animation: pawIn 500ms ease forwards 5050ms; }
+
+    @keyframes pawIn {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(6px) rotate(-18deg) scale(0.82);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0) rotate(-18deg) scale(0.95);
 
       }
 
@@ -862,7 +920,7 @@
 
     .page.active .teppan {
 
-      animation: teppanIn 900ms ease forwards 2100ms;
+      animation: teppanIn 900ms ease forwards 2300ms;
 
     }
 
@@ -914,17 +972,9 @@
 
     }
 
-    .grill::before {
+    .grill::before { left: 28px; }
 
-      left: 28px;
-
-    }
-
-    .grill::after {
-
-      left: 56px;
-
-    }
+    .grill::after { left: 56px; }
 
     .food {
 
@@ -1196,12 +1246,6 @@
 
       }
 
-      .cert-stamp {
-
-        margin-top: 6px;
-
-      }
-
     }
 
     @media (max-width: 360px) {
@@ -1288,15 +1332,15 @@
 
             <div class="line quote-big" style="--d: 720ms;">「嗯。」</div>
 
-            <div class="line" style="--d: 1400ms;">伴隨著睜大圓圓的眼睛，</div>
+            <div class="line" style="--d: 1650ms;">伴隨著睜大圓圓的眼睛，</div>
 
-            <div class="line" style="--d: 1920ms;">然後點頭。</div>
+            <div class="line" style="--d: 2250ms;">然後點頭。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 2550ms;">使用頻率非常高，</div>
+            <div class="line" style="--d: 3000ms;">使用頻率非常高，</div>
 
-            <div class="line" style="--d: 3070ms;">用途非常廣。</div>
+            <div class="line" style="--d: 3600ms;">用途非常廣。</div>
 
           </div>
 
@@ -1316,9 +1360,9 @@
 
           <div class="small-text">
 
-            <div class="line" style="--d: 160ms;">他平常對食物的喜好，</div>
+            <div class="line" style="--d: 180ms;">他平常對食物的喜好，</div>
 
-            <div class="line" style="--d: 600ms;">如果用 1 到 10 分來說，</div>
+            <div class="line" style="--d: 850ms;">如果用 1 到 10 分來說，</div>
 
             <div class="rating-wrap">
 
@@ -1338,21 +1382,21 @@
 
             </div>
 
-            <div class="line" style="--d: 2000ms;">大部分都是 <span class="gold em">7 分。</span></div>
+            <div class="line" style="--d: 3200ms;">大部分都是 <span class="gold em">7 分。</span></div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 2500ms;">7 分對他而言，</div>
+            <div class="line" style="--d: 4000ms;">7 分對他而言，</div>
 
-            <div class="line" style="--d: 2960ms;">是一個可以接受，</div>
+            <div class="line" style="--d: 4700ms;">是一個可以接受，</div>
 
-            <div class="line" style="--d: 3420ms;">但還不到超級滿意的分數。</div>
+            <div class="line" style="--d: 5400ms;">但還不到超級滿意的分數。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 3980ms;">原來他不是5分人也不是8分人</div>
+            <div class="line" style="--d: 6300ms;">原來他不是5分人也不是8分人</div>
 
-            <div class="line em" style="--d: 4500ms;">是7分人</div>
+            <div class="line em" style="--d: 7000ms;">是7分人</div>
 
             <div class="cert-stamp">7 分人認證</div>
 
@@ -1380,9 +1424,9 @@
 
             <div class="line" style="--d: 850ms;">對他來說，</div>
 
-            <div class="line" style="--d: 1370ms;">簡單、舒服、剛剛好，</div>
+            <div class="line" style="--d: 1450ms;">簡單、舒服、剛剛好，</div>
 
-            <div class="line" style="--d: 1890ms;">就蠻 OK 了。</div>
+            <div class="line" style="--d: 2050ms;">就蠻 OK 了。</div>
 
           </div>
 
@@ -1402,27 +1446,27 @@
 
           <div class="small-text">
 
-            <div class="line" style="--d: 160ms;">他還有一個特色是：</div>
+            <div class="line" style="--d: 180ms;">他還有一個特色是：</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 720ms;">看起來情緒很穩定，</div>
+            <div class="line" style="--d: 900ms;">看起來情緒很穩定，</div>
 
-            <div class="line" style="--d: 1240ms;">好像聽到什麼事都很淡定。</div>
+            <div class="line" style="--d: 1700ms;">好像聽到什麼事都很淡定。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 1800ms;">但其實，</div>
+            <div class="line" style="--d: 2550ms;">但其實，</div>
 
             <div class="processing">……處理中</div>
 
-            <div class="line" style="--d: 3300ms;">有時候只是反應沒有那麼快。</div>
+            <div class="line" style="--d: 5700ms;">有時候只是反應沒有那麼快。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 3860ms;">他長得一臉和善，</div>
+            <div class="line" style="--d: 6550ms;">他長得一臉和善，</div>
 
-            <div class="line" style="--d: 4380ms;">但內心有自己一定的堅持。</div>
+            <div class="line" style="--d: 7250ms;">但內心有自己一定的堅持。</div>
 
           </div>
 
@@ -1442,29 +1486,29 @@
 
           <div class="small-text center">
 
-            <div class="line" style="--d: 160ms;">但有趣的是，</div>
+            <div class="line" style="--d: 180ms;">但有趣的是，</div>
 
-            <div class="line" style="--d: 600ms;">這個人曾經說過：</div>
-
-            <div class="spacer"></div>
-
-            <div class="line" style="--d: 1200ms;">「現在會記得別人生日的人很少了。」</div>
+            <div class="line" style="--d: 900ms;">這個人曾經說過：</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 1950ms;">所以今天這件事，</div>
-
-            <div class="line" style="--d: 2450ms;">要特別註明一下：</div>
+            <div class="line" style="--d: 1800ms;">「現在會記得別人生日的人很少了。」</div>
 
             <div class="spacer"></div>
 
-            <div class="line memory-focus" style="--d: 3150ms;">他有被記得。</div>
+            <div class="line" style="--d: 3000ms;">所以今天這件事，</div>
+
+            <div class="line" style="--d: 3700ms;">要特別註明一下：</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 3850ms;">而且不是手機提醒那種記得。</div>
+            <div class="line memory-focus" style="--d: 4700ms;">他有被記得。</div>
 
-            <div class="line" style="--d: 4350ms;">是真的有人記得。</div>
+            <div class="spacer"></div>
+
+            <div class="line" style="--d: 5800ms;">而且不是手機提醒那種記得。</div>
+
+            <div class="line" style="--d: 6500ms;">是真的有人記得。</div>
 
           </div>
 
@@ -1484,25 +1528,25 @@
 
           <div class="small-text">
 
-            <div class="line" style="--d: 160ms;">他不是很適合太感人的禮物。</div>
+            <div class="line" style="--d: 180ms;">他不是很適合太感人的禮物。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 800ms;">照片太多，他可能會尷尬。</div>
+            <div class="line" style="--d: 900ms;">照片太多，他可能會尷尬。</div>
 
-            <div class="line" style="--d: 1320ms;">文字太深，他可能會沉默。</div>
+            <div class="line" style="--d: 1700ms;">文字太深，他可能會沉默。</div>
 
-            <div class="line" style="--d: 1840ms;">太用力祝福，他可能不知道要回什麼。</div>
-
-            <div class="spacer"></div>
-
-            <div class="line" style="--d: 2500ms;">所以只要讓他知道：</div>
+            <div class="line" style="--d: 2500ms;">太用力祝福，他可能不知道要回什麼。</div>
 
             <div class="spacer"></div>
 
-            <div class="line em" style="--d: 3150ms;">有人記得他生日</div>
+            <div class="line" style="--d: 3400ms;">所以只要讓他知道：</div>
 
-            <div class="line em" style="--d: 3670ms;">就好。</div>
+            <div class="spacer"></div>
+
+            <div class="line em" style="--d: 4400ms;">有人記得他生日</div>
+
+            <div class="line em" style="--d: 5100ms;">就好。</div>
 
           </div>
 
@@ -1518,37 +1562,37 @@
 
       <div class="card">
 
-        <div class="paw-path" aria-hidden="true">
-
-          <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
-
-          <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
-
-          <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
-
-          <div class="paw"><i></i><i></i><i></i><i></i><b></b></div>
-
-        </div>
-
         <div class="content">
 
           <div class="small-text">
 
-            <div class="line" style="--d: 160ms;">希望這位壽星今年：</div>
+            <div class="line" style="--d: 180ms;">希望這位壽星今年：</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 800ms;">工作多一點有趣的事，</div>
+            <div class="line" style="--d: 900ms;">工作多一點有趣的事，</div>
 
-            <div class="line" style="--d: 1320ms;">生活多一點開心的事，</div>
+            <div class="line" style="--d: 1700ms;">生活多一點開心的事，</div>
 
-            <div class="line" style="--d: 1840ms;">身體平安健康。</div>
+            <div class="line" style="--d: 2500ms;">身體平安健康。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 2500ms;">還有，</div>
+            <div class="line" style="--d: 3400ms;">還有，</div>
 
-            <div class="line em" style="--d: 3150ms;">Miu 也要健健康康的。</div>
+            <div class="line em" style="--d: 4100ms;">Miu 也要健健康康的。</div>
+
+            <div class="paw-inline" aria-hidden="true">
+
+              <div class="paw-mark"><i></i><i></i><i></i><i></i><b></b></div>
+
+              <div class="paw-mark"><i></i><i></i><i></i><i></i><b></b></div>
+
+              <div class="paw-mark"><i></i><i></i><i></i><i></i><b></b></div>
+
+              <div class="paw-mark"><i></i><i></i><i></i><i></i><b></b></div>
+
+            </div>
 
           </div>
 
@@ -1568,29 +1612,29 @@
 
           <div class="small-text">
 
-            <div class="line" style="--d: 160ms;">最後正式介紹一次：</div>
+            <div class="line" style="--d: 180ms;">最後正式介紹一次：</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 800ms;">這位是 6/30 的壽星。</div>
+            <div class="line" style="--d: 900ms;">這位是 6/30 的壽星。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 1400ms;">沒辦法做什麼定義，</div>
+            <div class="line" style="--d: 1800ms;">沒辦法做什麼定義，</div>
 
-            <div class="line" style="--d: 1920ms;">因為認識了兩年，</div>
+            <div class="line" style="--d: 2600ms;">因為認識了兩年，</div>
 
-            <div class="line" style="--d: 2440ms;">到現在還是在了解他的過程。</div>
+            <div class="line" style="--d: 3400ms;">到現在還是在了解他的過程。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 3100ms;">低調、實際、話不多，</div>
+            <div class="line" style="--d: 4300ms;">低調、實際、話不多，</div>
 
-            <div class="line" style="--d: 3620ms;">但能肯定的是，</div>
+            <div class="line" style="--d: 5100ms;">但能肯定的是，</div>
 
-            <div class="line em" style="--d: 4240ms;">他是一個心很善良、</div>
+            <div class="line em" style="--d: 6000ms;">他是一個心很善良、</div>
 
-            <div class="line em" style="--d: 4760ms;">也很溫柔的人。</div>
+            <div class="line em" style="--d: 6800ms;">也很溫柔的人。</div>
 
           </div>
 
@@ -1612,11 +1656,11 @@
 
             <div class="line" style="--d: 180ms;">一直以來，</div>
 
-            <div class="line" style="--d: 760ms;">謝謝你的包容與陪伴。</div>
+            <div class="line" style="--d: 900ms;">謝謝你的包容與陪伴。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 1500ms;">祝你明天的鐵板燒吃得愉快。</div>
+            <div class="line" style="--d: 1900ms;">祝你明天的鐵板燒吃得愉快。</div>
 
             <div class="teppan" aria-hidden="true">
 
@@ -1640,7 +1684,7 @@
 
             <div class="spacer"></div>
 
-            <div class="line em" style="--d: 3000ms;">生日快樂。</div>
+            <div class="line em" style="--d: 3600ms;">生日快樂</div>
 
           </div>
 
@@ -1710,7 +1754,7 @@
 
       const animated = page.querySelectorAll(
 
-        ".line, .hello, .rating-wrap, .rating-fill, .cert-stamp, .processing, .paw, .teppan, .steam, .eyes"
+        ".line, .hello, .rating-wrap, .rating-fill, .cert-stamp, .processing, .teppan, .steam, .eyes, .paw-inline, .paw-mark"
 
       );
 
