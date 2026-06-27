@@ -84,7 +84,7 @@
 
       pointer-events: none;
 
-      opacity: 0.26;
+      opacity: 0.22;
 
       background-image:
 
@@ -252,13 +252,7 @@
 
     }
 
-    .long .content {
-
-      justify-content: flex-start;
-
-      padding-top: 6px;
-
-    }
+    .cover .content,
 
     .final .content {
 
@@ -267,6 +261,14 @@
       text-align: center;
 
       align-items: center;
+
+    }
+
+    .long .content {
+
+      justify-content: flex-start;
+
+      padding-top: 6px;
 
     }
 
@@ -382,6 +384,30 @@
 
     }
 
+    .birthday-title {
+
+      display: inline-block;
+
+      font-size: 1.48em;
+
+      font-weight: 900;
+
+      letter-spacing: 0.06em;
+
+    }
+
+    .ten-title {
+
+      display: inline-block;
+
+      font-size: 1.28em;
+
+      font-weight: 900;
+
+      letter-spacing: 0.05em;
+
+    }
+
     .gold {
 
       color: var(--gold);
@@ -390,11 +416,11 @@
 
     .hello {
 
-      font-size: clamp(40px, 10.5vw, 58px);
+      font-size: clamp(44px, 11vw, 62px);
 
       letter-spacing: 0.06em;
 
-      font-weight: 800;
+      font-weight: 900;
 
       opacity: 0;
 
@@ -432,13 +458,13 @@
 
       display: inline-block;
 
-      font-size: clamp(48px, 13vw, 68px);
+      font-size: clamp(58px, 15vw, 82px);
 
-      line-height: 1.05;
+      line-height: 1.02;
 
       letter-spacing: 0.08em;
 
-      margin: 4px 0 8px;
+      margin: 4px 0 10px;
 
       color: var(--text);
 
@@ -450,17 +476,17 @@
 
       position: absolute;
 
-      right: 32px;
+      right: 30px;
 
-      top: 62px;
+      top: 60px;
 
       font-family: system-ui, sans-serif;
 
-      font-size: 30px;
+      font-size: 31px;
 
       letter-spacing: 4px;
 
-      color: rgba(31, 42, 54, 0.52);
+      color: rgba(31, 42, 54, 0.5);
 
       opacity: 0;
 
@@ -474,9 +500,9 @@
 
       animation:
 
-        eyesIn 700ms ease forwards 1600ms,
+        eyesIn 700ms ease forwards 1700ms,
 
-        nod 1150ms ease-in-out infinite 2400ms;
+        nod 1150ms ease-in-out infinite 2500ms;
 
     }
 
@@ -512,7 +538,7 @@
 
     .rating-wrap {
 
-      margin: 12px 0 12px;
+      margin: 16px 0 16px;
 
       opacity: 0;
 
@@ -522,7 +548,7 @@
 
     .page.active .rating-wrap {
 
-      animation: ratingShow 900ms ease forwards 1400ms;
+      animation: ratingShow 900ms ease forwards 1500ms;
 
     }
 
@@ -544,7 +570,7 @@
 
       width: 100%;
 
-      height: 6px;
+      height: 7px;
 
       border-radius: 999px;
 
@@ -552,7 +578,7 @@
 
       overflow: hidden;
 
-      margin-bottom: 10px;
+      margin-bottom: 11px;
 
     }
 
@@ -574,7 +600,7 @@
 
     .page.active .rating-fill {
 
-      animation: fillSeven 2500ms cubic-bezier(.18,.8,.25,1) forwards 2000ms;
+      animation: fillSeven 2800ms cubic-bezier(.18,.8,.25,1) forwards 2100ms;
 
     }
 
@@ -604,7 +630,7 @@
 
     .page.active .rating-nums span:nth-child(7) {
 
-      animation: sevenGlow 700ms ease forwards 4550ms;
+      animation: sevenGlow 700ms ease forwards 4850ms;
 
     }
 
@@ -614,7 +640,7 @@
 
         color: var(--gold);
 
-        transform: translateY(-3px) scale(1.38);
+        transform: translateY(-3px) scale(1.4);
 
         font-weight: 800;
 
@@ -624,7 +650,7 @@
 
     .cert-stamp {
 
-      margin-top: 14px;
+      margin-top: 16px;
 
       width: fit-content;
 
@@ -652,7 +678,7 @@
 
     .page.active .cert-stamp {
 
-      animation: stampIn 620ms cubic-bezier(.18, 1.35, .35, 1) forwards 7700ms;
+      animation: stampIn 620ms cubic-bezier(.18, 1.35, .35, 1) forwards 7950ms;
 
     }
 
@@ -686,13 +712,23 @@
 
     .processing {
 
-      margin: 8px 0 12px 0;
+      align-self: flex-end;
 
-      color: rgba(31, 42, 54, 0.5);
+      margin: 10px 8px 14px 0;
+
+      padding: 6px 12px;
+
+      border: 1px solid rgba(31, 42, 54, 0.12);
+
+      border-radius: 999px;
+
+      background: rgba(255, 250, 242, 0.66);
+
+      color: rgba(31, 42, 54, 0.52);
 
       font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
 
-      font-size: 24px;
+      font-size: 22px;
 
       font-weight: 900;
 
@@ -706,7 +742,7 @@
 
     .page.active .processing {
 
-      animation: processingSequence 3000ms ease forwards 3700ms;
+      animation: processingSequence 3200ms ease forwards 3850ms;
 
     }
 
@@ -730,7 +766,7 @@
 
       26% {
 
-        opacity: 0.25;
+        opacity: 0.28;
 
       }
 
@@ -742,7 +778,7 @@
 
       54% {
 
-        opacity: 0.25;
+        opacity: 0.28;
 
       }
 
@@ -814,9 +850,9 @@
 
       position: absolute;
 
-      width: 28px;
+      width: 30px;
 
-      height: 25px;
+      height: 27px;
 
       opacity: 0;
 
@@ -868,13 +904,13 @@
 
     }
 
-    .miu-page .paw:nth-child(1) { left: 34px; bottom: 108px; }
+    .miu-page .paw:nth-child(1) { left: 34px; top: 59%; }
 
-    .miu-page .paw:nth-child(2) { left: 78px; bottom: 146px; }
+    .miu-page .paw:nth-child(2) { left: 82px; top: 51%; }
 
-    .miu-page .paw:nth-child(3) { left: 124px; bottom: 120px; }
+    .miu-page .paw:nth-child(3) { left: 132px; top: 57%; }
 
-    .miu-page .paw:nth-child(4) { left: 170px; bottom: 160px; }
+    .miu-page .paw:nth-child(4) { left: 184px; top: 48%; }
 
     .page.active.miu-page .paw:nth-child(1) { animation: pawIn 560ms ease forwards 4600ms; }
 
@@ -1090,7 +1126,7 @@
 
       35% {
 
-        opacity: 0.72;
+        opacity: 0.62;
 
       }
 
@@ -1246,6 +1282,12 @@
 
       }
 
+      .processing {
+
+        font-size: 20px;
+
+      }
+
     }
 
     @media (max-width: 360px) {
@@ -1266,6 +1308,12 @@
 
       }
 
+      .quote-big {
+
+        font-size: clamp(52px, 14vw, 72px);
+
+      }
+
     }
 
   </style>
@@ -1276,7 +1324,7 @@
 
   <main class="deck" id="deck">
 
-    <section class="page active">
+    <section class="page active cover">
 
       <div class="card">
 
@@ -1344,7 +1392,7 @@
 
     </section>
 
-    <section class="page long">
+    <section class="page long seven-page">
 
       <div class="card">
 
@@ -1374,21 +1422,21 @@
 
             </div>
 
-            <div class="line" style="--d: 3200ms;">大部分都是 <span class="big-point gold">7 分。</span></div>
+            <div class="line" style="--d: 3400ms;">大部分都是 <span class="big-point gold">7 分。</span></div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 4000ms;"><span class="point gold">7 分</span>對他而言，</div>
+            <div class="line" style="--d: 4200ms;"><span class="point">7 分</span>對他而言，</div>
 
-            <div class="line" style="--d: 4700ms;">是一個可以接受，</div>
+            <div class="line" style="--d: 4900ms;">是一個可以接受，</div>
 
-            <div class="line" style="--d: 5400ms;">但還不到<span class="point">超級滿意</span>的分數。</div>
+            <div class="line" style="--d: 5600ms;">但還不到<span class="point">超級滿意</span>的分數。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 6300ms;">原來他不是5分人也不是8分人</div>
+            <div class="line" style="--d: 6500ms;">原來他不是5分人也不是8分人</div>
 
-            <div class="line" style="--d: 7000ms;"><span class="big-point">是7分人</span></div>
+            <div class="line" style="--d: 7200ms;"><span class="big-point">是7分人</span></div>
 
             <div class="cert-stamp">7 分人認證</div>
 
@@ -1448,13 +1496,13 @@
 
             <div class="processing">……處理中</div>
 
-            <div class="line" style="--d: 7200ms;">有時候只是<span class="point">反應沒有那麼快</span>。</div>
+            <div class="line" style="--d: 7500ms;">有時候只是<span class="point">反應沒有那麼快</span>。</div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 8050ms;">他長得一臉和善，</div>
+            <div class="line" style="--d: 8350ms;">他長得一臉和善，</div>
 
-            <div class="line" style="--d: 8750ms;">但內心有自己一定的<span class="point">堅持</span>。</div>
+            <div class="line" style="--d: 9050ms;">但內心有自己一定的<span class="point">堅持</span>。</div>
 
           </div>
 
@@ -1640,17 +1688,17 @@
 
             <div class="line" style="--d: 1900ms;">
 
-              <span class="big-point">生日快樂</span>
+              <span class="birthday-title">生日快樂</span>
 
             </div>
 
             <div class="spacer"></div>
 
-            <div class="line" style="--d: 3000ms;">祝你明天可以吃到</div>
+            <div class="line" style="--d: 3100ms;">祝你明天可以吃到</div>
 
-            <div class="line" style="--d: 3700ms;">
+            <div class="line" style="--d: 3850ms;">
 
-              <span class="big-point gold">10分鐵板燒</span>
+              <span class="ten-title gold">10分鐵板燒</span>
 
             </div>
 
