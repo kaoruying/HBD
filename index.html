@@ -1,493 +1,972 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>6/30 Happy Birthday</title>
-<style>
-:root{
-  --bg:#f6efe6;
-  --cream:#fff8ed;
-  --ink:#08399b;
-  --text:#171412;
-  --muted:#8b7765;
-  --line:rgba(23,20,18,.14);
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;overflow:hidden}
-body{
-  color:var(--text);
-  background:linear-gradient(135deg,#f8f1e8,#e6d4bd);
-  font-family:"Kaiti TC","BiauKai","DFKai-SB","PingFang TC","Microsoft JhengHei",serif;
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:radial-gradient(rgba(23,20,18,.055) .55px,transparent .55px);
-  background-size:8px 8px;opacity:.25;
-}
-#app{position:relative;width:100vw;height:100svh;overflow:hidden}
-.progress{position:fixed;left:0;top:0;height:3px;background:var(--ink);width:0%;z-index:80;transition:width .65s cubic-bezier(.2,.75,.2,1)}
-.top{
-  position:fixed;left:0;right:0;top:0;z-index:70;
-  padding:14px 16px;display:flex;justify-content:space-between;pointer-events:none;
-}
-.pill{
-  pointer-events:auto;display:inline-flex;align-items:center;min-height:34px;
-  padding:8px 13px;border-radius:999px;border:1px solid rgba(23,20,18,.12);
-  background:rgba(255,248,237,.72);backdrop-filter:blur(14px);
-  color:rgba(23,20,18,.68);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;
-}
-.slider{position:relative;width:100%;height:100%}
-.page{
-  position:absolute;inset:0;width:100%;height:100svh;
-  display:flex;align-items:center;justify-content:center;
-  padding:78px 18px 74px;
-  opacity:0;visibility:hidden;transform:translateY(100%) scale(.96);
-  transition:transform .9s cubic-bezier(.2,.78,.18,1),opacity .65s ease,visibility .65s ease;
-  overflow:hidden;
-}
-.page.active{opacity:1;visibility:visible;transform:translateY(0) scale(1);z-index:5}
-.page.prev{opacity:0;visibility:hidden;transform:translateY(-100%) scale(.96)}
-.bg-big{
-  position:absolute;right:-.08em;bottom:-.18em;z-index:0;
-  color:rgba(8,57,155,.08);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:clamp(130px,35vw,460px);font-weight:950;letter-spacing:-.14em;line-height:.78;
-  pointer-events:none;
-}
-.wrap{position:relative;z-index:2;width:min(100%,1120px);margin:0 auto}
-.grid{display:grid;grid-template-columns:1.12fr .88fr;gap:36px;align-items:center}
-.kicker{
-  color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:13px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;
-}
-h1{
-  margin:0;color:var(--ink);font-size:clamp(76px,18vw,190px);
-  line-height:.78;letter-spacing:-.11em;font-weight:800;
-}
-h2{
-  margin:0 0 24px;color:var(--ink);font-size:clamp(44px,10vw,112px);
-  line-height:.9;letter-spacing:-.09em;font-weight:800;
-}
-.lead{
-  margin:28px 0 0;white-space:pre-line;font-size:clamp(24px,5vw,48px);
-  line-height:1.28;letter-spacing:-.02em;
-}
-.copy{
-  margin:0;max-width:780px;white-space:pre-line;font-size:clamp(22px,4.2vw,40px);
-  line-height:1.48;letter-spacing:-.012em;
-}
-.small{
-  margin-top:22px;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:14px;line-height:1.85;max-width:560px;
-}
-.deck{
-  position:relative;min-height:420px;perspective:1300px;
-}
-.stack-card{
-  position:absolute;inset:0;border-radius:42px;border:1px solid rgba(23,20,18,.13);
-  background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(255,248,237,.72));
-  box-shadow:0 34px 78px rgba(64,43,22,.14);overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-}
-.stack-card:nth-child(1){transform:rotate(-6deg) translate(-18px,20px);opacity:.42}
-.stack-card:nth-child(2){transform:rotate(5deg) translate(18px,-12px);opacity:.62}
-.stack-card:nth-child(3){animation:float 4.5s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-14px) rotate(1deg)}}
-.stack-card::before{
-  content:"";position:absolute;inset:0;
-  background-image:linear-gradient(rgba(8,57,155,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(8,57,155,.13) 1px,transparent 1px);
-  background-size:34px 34px;opacity:.45;mask-image:linear-gradient(to bottom,#000,transparent 86%);
-}
-.number{
-  position:relative;z-index:1;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:clamp(92px,18vw,190px);line-height:.82;font-weight:950;letter-spacing:-.13em;
-}
-.card-label{
-  position:absolute;right:26px;bottom:22px;color:rgba(8,57,155,.28);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:14px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
-}
-.panel{
-  border:1px solid rgba(23,20,18,.13);border-radius:36px;background:rgba(255,248,237,.62);
-  padding:28px;box-shadow:0 24px 60px rgba(64,43,22,.1);
-}
-.flip-card{width:100%;min-height:230px;perspective:1400px;cursor:pointer}
-.flip-inner{position:relative;width:100%;min-height:230px;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.2,.72,.2,1)}
-.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
-.flip-face{
-  position:absolute;inset:0;padding:26px;border:1px solid rgba(23,20,18,.13);border-radius:34px;
-  background:rgba(255,248,237,.66);backface-visibility:hidden;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;
-}
-.flip-face::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.7),transparent 42%)}
-.flip-back{transform:rotateY(180deg);background:rgba(8,57,155,.93);color:var(--cream)}
-.flip-label{position:relative;z-index:1;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
-.flip-back .flip-label{color:rgba(255,248,237,.72)}
-.flip-main{position:relative;z-index:1;color:var(--ink);font-size:clamp(28px,6vw,64px);line-height:1.02;letter-spacing:-.06em}
-.flip-back .flip-main{color:var(--cream)}
-.tap{position:relative;z-index:1;color:rgba(23,20,18,.45);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
-.flip-back .tap{color:rgba(255,248,237,.68)}
-.side-word{
-  color:rgba(8,57,155,.14);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:clamp(86px,18vw,230px);font-weight:950;line-height:.76;letter-spacing:-.13em;
-}
-.outdoor{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
-.outdoor div{
-  min-height:170px;border:1px solid rgba(23,20,18,.13);border-radius:30px;background:rgba(255,248,237,.62);
-  padding:20px 16px;display:flex;flex-direction:column;justify-content:space-between;transition:.45s ease;
-}
-.outdoor div:hover{transform:translateY(-8px) rotate(-1deg)}
-.outdoor b{
-  color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:clamp(34px,7vw,72px);line-height:.9;letter-spacing:-.08em;
-}
-.outdoor span{
-  color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:12px;letter-spacing:.12em;text-transform:uppercase;
-}
-.nav{
-  position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:60;display:grid;gap:9px;
-}
-.dot{
-  width:9px;height:9px;border-radius:50%;border:1px solid rgba(8,57,155,.45);background:transparent;
-  transition:.35s ease;
-}
-.dot.active{background:var(--ink);transform:scale(1.35)}
-.confetti{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
-.confetti i{
-  position:absolute;top:-20px;width:8px;height:14px;background:var(--ink);opacity:.9;
-  animation:fall 1.8s linear forwards;
-}
-@keyframes fall{
-  to{transform:translateY(110vh) rotate(720deg);opacity:0}
-}
-.page.active .enter{
-  animation:enter .9s cubic-bezier(.2,.78,.18,1) both;
-}
-.page.active .enter.delay{animation-delay:.12s}
-.page.active .enter.delay2{animation-delay:.24s}
-@keyframes enter{
-  from{opacity:0;transform:translateY(50px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@media(max-width:860px){
-  .grid{grid-template-columns:1fr;gap:28px}
-  .deck{min-height:300px}
-  .side-word{display:none}
-  .outdoor{grid-template-columns:1fr}
-  .nav{display:none}
-}
-@media(max-width:520px){
-  .top{padding:12px}.pill{min-height:32px;font-size:10px;padding:7px 10px}
-  .page{padding:74px 16px 74px}
-  h1{font-size:clamp(72px,23vw,112px)}
-  h2{font-size:clamp(43px,12vw,66px)}
-  .lead{font-size:24px}
-  .copy{font-size:22px}
-  .number{font-size:clamp(90px,28vw,140px)}
-  .flip-card,.flip-inner{min-height:220px}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>生日快樂</title>
+
+  <style>
+    :root {
+      --bg: #f7f1e8;
+      --paper: #fffaf2;
+      --text: #1f2a36;
+      --muted: #8a8177;
+      --gold: #b08a4f;
+      --gold-soft: rgba(176, 138, 79, 0.16);
+      --blue-soft: rgba(31, 42, 54, 0.08);
+      --line: rgba(31, 42, 54, 0.14);
+      --shadow: 0 22px 60px rgba(31, 42, 54, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 16% 14%, rgba(176, 138, 79, 0.09), transparent 28%),
+        radial-gradient(circle at 84% 78%, rgba(31, 42, 54, 0.07), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        "Noto Serif TC",
+        "Noto Sans TC",
+        "PingFang TC",
+        "Microsoft JhengHei",
+        serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.36;
+      background-image:
+        linear-gradient(rgba(31,42,54,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31,42,54,0.025) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+    }
+
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100dvh;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    .page {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      transform: translateX(100%);
+      opacity: 0;
+      transition:
+        transform 650ms cubic-bezier(.22, .9, .24, 1),
+        opacity 420ms ease;
+      will-change: transform, opacity;
+    }
+
+    .page.prev {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    .page.active {
+      transform: translateX(0);
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .card {
+      position: relative;
+      width: min(92vw, 430px);
+      min-height: min(78dvh, 710px);
+      padding: 42px 30px;
+      border: 1px solid rgba(31, 42, 54, 0.08);
+      border-radius: 30px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.58), rgba(255,250,242,0.88)),
+        var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      right: 22px;
+      width: 52px;
+      height: 52px;
+      border-top: 1px solid rgba(176, 138, 79, 0.35);
+      border-right: 1px solid rgba(176, 138, 79, 0.35);
+      border-radius: 0 20px 0 0;
+      opacity: 0.75;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      bottom: 22px;
+      width: 52px;
+      height: 52px;
+      border-left: 1px solid rgba(176, 138, 79, 0.28);
+      border-bottom: 1px solid rgba(176, 138, 79, 0.28);
+      border-radius: 0 0 0 20px;
+      opacity: 0.7;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      min-height: calc(min(78dvh, 710px) - 84px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .text {
+      font-size: clamp(21px, 5.6vw, 27px);
+      line-height: 1.88;
+      letter-spacing: 0.035em;
+      font-weight: 500;
+      white-space: pre-line;
+    }
+
+    .small-text {
+      font-size: clamp(19px, 5vw, 24px);
+      line-height: 1.9;
+      letter-spacing: 0.035em;
+      font-weight: 500;
+      white-space: pre-line;
+    }
+
+    .center {
+      text-align: center;
+      align-items: center;
+    }
+
+    .cover .card {
+      display: grid;
+      place-items: center;
+    }
+
+    .hello {
+      font-size: clamp(36px, 10vw, 54px);
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .fade {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    .page.active .fade {
+      animation: fadeUp 720ms ease forwards;
+      animation-delay: var(--d, 0ms);
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .em {
+      font-size: 1.18em;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .gold {
+      color: var(--gold);
+    }
+
+    .quote-big {
+      display: inline-block;
+      font-size: clamp(38px, 11vw, 58px);
+      line-height: 1;
+      letter-spacing: 0.08em;
+      margin: 10px 0 12px;
+      color: var(--text);
+    }
+
+    /* 嗯。頁面 */
+    .eyes {
+      position: absolute;
+      right: 34px;
+      top: 78px;
+      font-family: system-ui, sans-serif;
+      font-size: 34px;
+      letter-spacing: 4px;
+      color: rgba(31, 42, 54, 0.52);
+      opacity: 0;
+      transform-origin: center bottom;
+    }
+
+    .page.active .eyes {
+      animation:
+        eyesIn 650ms ease forwards 850ms,
+        nod 1150ms ease-in-out infinite 1500ms;
+    }
+
+    @keyframes eyesIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes nod {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      45% { transform: translateY(5px) rotate(1.5deg); }
+      70% { transform: translateY(1px) rotate(0deg); }
+    }
+
+    /* 7 分人頁面 */
+    .rating-wrap {
+      margin: 24px 0 8px;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .page.active .rating-wrap {
+      animation: fadeUp 650ms ease forwards 950ms;
+    }
+
+    .rating-line {
+      position: relative;
+      width: 100%;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(31, 42, 54, 0.1);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .rating-fill {
+      height: 100%;
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(176, 138, 79, 0.26), rgba(176, 138, 79, 0.95));
+      transform-origin: left center;
+      transform: scaleX(0);
+    }
+
+    .page.active .rating-fill {
+      animation: fillSeven 1850ms cubic-bezier(.18,.8,.25,1) forwards 1350ms;
+    }
+
+    @keyframes fillSeven {
+      to { transform: scaleX(0.67); }
+    }
+
+    .rating-nums {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 12px;
+      color: rgba(31, 42, 54, 0.42);
+      text-align: center;
+      letter-spacing: 0;
+    }
+
+    .rating-nums span {
+      transition: all 300ms ease;
+    }
+
+    .page.active .rating-nums span:nth-child(7) {
+      animation: sevenGlow 620ms ease forwards 3050ms;
+    }
+
+    @keyframes sevenGlow {
+      to {
+        color: var(--gold);
+        transform: translateY(-4px) scale(1.45);
+        font-weight: 800;
+      }
+    }
+
+    .cert-stamp {
+      align-self: center;
+      margin-top: 18px;
+      width: fit-content;
+      padding: 8px 16px;
+      border: 2px solid var(--gold);
+      border-radius: 999px;
+      color: var(--gold);
+      font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      opacity: 0;
+      transform: rotate(-8deg) scale(1.3);
+    }
+
+    .page.active .cert-stamp {
+      animation: stampIn 520ms cubic-bezier(.18, 1.35, .35, 1) forwards 4600ms;
+    }
+
+    @keyframes stampIn {
+      0% {
+        opacity: 0;
+        transform: rotate(-12deg) scale(1.6);
+        filter: blur(2px);
+      }
+      65% {
+        opacity: 1;
+        transform: rotate(-5deg) scale(0.92);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 1;
+        transform: rotate(-6deg) scale(1);
+      }
+    }
+
+    /* 處理中頁面 */
+    .processing {
+      position: absolute;
+      right: 34px;
+      bottom: 84px;
+      color: rgba(31, 42, 54, 0.42);
+      font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      opacity: 0;
+    }
+
+    .page.active .processing {
+      animation:
+        fadeUp 500ms ease forwards 2550ms,
+        blink 1.15s ease-in-out infinite 3200ms;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.38; }
+      50% { opacity: 0.9; }
+    }
+
+    /* 蓋章頁面 */
+    .memory-focus {
+      display: inline-block;
+      position: relative;
+      margin: 8px 0;
+      font-size: 1.18em;
+      font-weight: 700;
+    }
+
+    .memory-focus::after {
+      content: "";
+      position: absolute;
+      left: -4px;
+      right: -4px;
+      bottom: 6px;
+      height: 10px;
+      background: var(--gold-soft);
+      z-index: -1;
+      border-radius: 999px;
+    }
+
+    .stamp-area {
+      position: relative;
+      min-height: 92px;
+      margin-top: 12px;
+    }
+
+    .stamp {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%) rotate(-7deg) scale(1.35);
+      padding: 8px 14px;
+      border: 2px solid rgba(176, 138, 79, 0.86);
+      border-radius: 10px;
+      color: rgba(176, 138, 79, 0.95);
+      background: rgba(255, 250, 242, 0.72);
+      font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      box-shadow: 0 10px 20px rgba(176, 138, 79, 0.08);
+    }
+
+    .stamp.one {
+      top: 2px;
+    }
+
+    .stamp.two {
+      top: 45px;
+      transform: translateX(-50%) rotate(6deg) scale(1.35);
+    }
+
+    .page.active .stamp.one {
+      animation: stampOne 520ms cubic-bezier(.18, 1.35, .35, 1) forwards 4550ms;
+    }
+
+    .page.active .stamp.two {
+      animation: stampTwo 520ms cubic-bezier(.18, 1.35, .35, 1) forwards 5150ms;
+    }
+
+    @keyframes stampOne {
+      to {
+        opacity: 1;
+        transform: translateX(-50%) rotate(-7deg) scale(1);
+      }
+    }
+
+    @keyframes stampTwo {
+      to {
+        opacity: 1;
+        transform: translateX(-50%) rotate(6deg) scale(1);
+      }
+    }
+
+    /* Miu 貓掌 */
+    .paw-path {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .paw {
+      position: absolute;
+      font-size: 21px;
+      color: rgba(176, 138, 79, 0.55);
+      opacity: 0;
+      transform: rotate(-18deg) scale(0.85);
+    }
+
+    .paw:nth-child(1) { left: 26px; bottom: 80px; }
+    .paw:nth-child(2) { left: 62px; bottom: 120px; }
+    .paw:nth-child(3) { left: 104px; bottom: 96px; }
+    .paw:nth-child(4) { left: 148px; bottom: 138px; }
+
+    .page.active .paw:nth-child(1) { animation: pawIn 500ms ease forwards 3800ms; }
+    .page.active .paw:nth-child(2) { animation: pawIn 500ms ease forwards 4100ms; }
+    .page.active .paw:nth-child(3) { animation: pawIn 500ms ease forwards 4400ms; }
+    .page.active .paw:nth-child(4) { animation: pawIn 500ms ease forwards 4700ms; }
+
+    @keyframes pawIn {
+      0% {
+        opacity: 0;
+        transform: translateY(8px) rotate(-18deg) scale(0.72);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) rotate(-18deg) scale(0.9);
+      }
+    }
+
+    /* 鐵板燒 */
+    .teppan {
+      position: relative;
+      width: 72px;
+      height: 52px;
+      margin: 18px auto 0;
+      opacity: 0;
+    }
+
+    .page.active .teppan {
+      animation: fadeUp 650ms ease forwards 2200ms;
+    }
+
+    .plate {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      height: 13px;
+      border: 2px solid rgba(31, 42, 54, 0.46);
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+    }
+
+    .steam {
+      position: absolute;
+      bottom: 25px;
+      width: 10px;
+      height: 28px;
+      border-left: 2px solid rgba(176, 138, 79, 0.65);
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    .steam.s1 { left: 21px; }
+    .steam.s2 { left: 35px; height: 33px; }
+    .steam.s3 { left: 49px; }
+
+    .page.active .steam {
+      animation: steamUp 1450ms ease-in-out infinite;
+    }
+
+    .page.active .steam.s2 { animation-delay: 180ms; }
+    .page.active .steam.s3 { animation-delay: 360ms; }
+
+    @keyframes steamUp {
+      0% {
+        opacity: 0;
+        transform: translateY(8px) scaleY(0.85);
+      }
+      35% {
+        opacity: 0.75;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-10px) scaleY(1.1);
+      }
+    }
+
+    /* 底部進度點 */
+    .dots {
+      position: fixed;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      gap: 7px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 250, 242, 0.62);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(31, 42, 54, 0.06);
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(31, 42, 54, 0.22);
+      transition: all 260ms ease;
+    }
+
+    .dot.active {
+      width: 18px;
+      background: var(--gold);
+    }
+
+    .hint {
+      position: fixed;
+      left: 50%;
+      bottom: calc(max(18px, env(safe-area-inset-bottom)) + 38px);
+      transform: translateX(-50%);
+      z-index: 9;
+      font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: rgba(31, 42, 54, 0.35);
+      opacity: 0;
+      animation: hintInOut 3.2s ease forwards 1.1s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    @keyframes hintInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(4px); }
+      25% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      75% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+    }
+
+    @media (max-height: 720px) {
+      .card {
+        min-height: 74dvh;
+        padding: 34px 26px;
+      }
+
+      .content {
+        min-height: calc(74dvh - 68px);
+      }
+
+      .text,
+      .small-text {
+        line-height: 1.72;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .card {
+        padding: 34px 24px;
+      }
+
+      .text {
+        font-size: 20px;
+      }
+
+      .small-text {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="progress" id="progress"></div>
-<header class="top"><span class="pill">6/30 Birthday Story</span><span class="pill">Swipe / Tap</span></header>
-<div class="nav" id="nav"></div>
-<div class="confetti" id="confetti"></div>
+  <main class="deck" id="deck">
 
-<main id="app">
-  <div class="slider" id="slider">
-
-    <section class="page active">
-      <div class="bg-big">6/30</div>
-      <div class="wrap grid">
-        <div>
-          <div class="kicker enter">Today’s Birthday Page</div>
-          <h1 class="hero-title enter delay">hi<br>你好 👋</h1>
-          <p class="lead enter delay2">今天要介紹一位
-6/30 的壽星。</p>
-        </div>
-        <div class="deck enter delay">
-          <div class="stack-card"></div><div class="stack-card"></div>
-          <div class="stack-card"><div class="number">6<br>30</div><div class="card-label">birthday</div></div>
+    <!-- 封面 -->
+    <section class="page active cover">
+      <div class="card">
+        <div class="content center">
+          <div class="hello fade" style="--d: 200ms;">hi 你好</div>
         </div>
       </div>
     </section>
 
+    <!-- 第 1 頁 -->
     <section class="page">
-      <div class="bg-big">嗯</div>
-      <div class="wrap grid">
-        <div class="side-word enter">嗯</div>
-        <div>
-          <div class="kicker enter">Chapter 01</div>
-          <h2 class="enter delay">很常出現在我的故事裡的人</h2>
-          <p class="copy enter delay2">今天要介紹的這一位，
-是一位平常話不多，
-但很常出現在我的故事裡的人。
-
-他的常見回覆是：「嗯。」
-伴隨著睜大圓圓的眼睛，
-然後點頭。
-
-使用頻率非常高，
-用途非常廣。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="page">
-      <div class="bg-big">7</div>
-      <div class="wrap grid">
-        <div>
-          <div class="kicker enter">Chapter 02</div>
-          <h2 class="enter delay">食物大部分都是 7 分的人</h2>
-          <p class="copy enter delay2">他平常對食物的喜好，
-如果用 1 到 10 分來說，
-
-大部分都是 7 分。
-
-7 分對他而言，
-是一個可以接受，
-但還不到超級滿意的分數。</p>
-        </div>
-        <div class="flip-card enter delay2">
-          <div class="flip-inner">
-            <div class="flip-face"><div class="flip-label">rating</div><div class="flip-main">7 / 10</div><div class="tap">點一下翻牌</div></div>
-            <div class="flip-face flip-back"><div class="flip-label">meaning</div><div class="flip-main">可以接受，<br>但還不到超級滿意。</div><div class="tap">再點一下翻回來</div></div>
+      <div class="card">
+        <div class="content">
+          <div class="text">
+            <div class="fade" style="--d: 150ms;">今天要介紹的這一位，</div>
+            <div class="fade" style="--d: 650ms;">是一位平常話不多，</div>
+            <div class="fade" style="--d: 1150ms;">但很常出現在我的故事裡的人。</div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 第 2 頁 -->
     <section class="page">
-      <div class="bg-big">OK</div>
-      <div class="wrap grid">
-        <div class="flip-card enter">
-          <div class="flip-inner">
-            <div class="flip-face"><div class="flip-label">preference</div><div class="flip-main">簡單。<br>舒服。<br>剛剛好。</div><div class="tap">點一下翻牌</div></div>
-            <div class="flip-face flip-back"><div class="flip-label">answer</div><div class="flip-main">這樣就<br>蠻 OK 了。</div><div class="tap">再點一下翻回來</div></div>
-          </div>
-        </div>
-        <div>
-          <div class="kicker enter">Chapter 03</div>
-          <h2 class="enter delay">簡單、舒服、剛剛好的人</h2>
-          <p class="copy enter delay2">他不太追求儀式感。
-
-對他來說，
-簡單、舒服、剛剛好，
-就蠻 OK 了。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="page">
-      <div class="bg-big">Calm</div>
-      <div class="wrap grid">
-        <div class="side-word enter">Calm</div>
-        <div>
-          <div class="kicker enter">Chapter 04</div>
-          <h2 class="enter delay">看起來淡定，但其實很有自己的堅持</h2>
-          <p class="copy enter delay2">他還有一個特色是：
-
-看起來情緒很穩定，
-好像聽到什麼事都很淡定。
-
-但其實，
-有時候只是反應沒有那麼快。
-
-他長得一臉和善，
-但內心有自己一定的堅持。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="page">
-      <div class="bg-big">記得</div>
-      <div class="wrap grid">
-        <div>
-          <div class="kicker enter">Chapter 05</div>
-          <h2 class="enter delay">有被記得的人</h2>
-          <p class="copy enter delay2">但有趣的是，
-這個人曾經說過：
-
-「現在會記得別人生日的人很少了。」
-
-所以今天這件事，
-要特別註明一下：
-
-他有被記得。
-
-而且不是手機提醒那種記得。
-是真的有人記得。</p>
-        </div>
-        <div class="flip-card enter delay2">
-          <div class="flip-inner">
-            <div class="flip-face"><div class="flip-label">note</div><div class="flip-main">他有被記得。</div><div class="tap">點一下翻牌</div></div>
-            <div class="flip-face flip-back"><div class="flip-label">important</div><div class="flip-main">不是手機提醒。<br>是真的有人記得。</div><div class="tap">再點一下翻回來</div></div>
+      <div class="card">
+        <div class="eyes">◉ ◉</div>
+        <div class="content">
+          <div class="text">
+            <div class="fade" style="--d: 150ms;">他的常見回覆是：</div>
+            <div class="fade quote-big" style="--d: 650ms;">「嗯。」</div>
+            <div class="fade" style="--d: 1350ms;">伴隨著睜大圓圓的眼睛，</div>
+            <div class="fade" style="--d: 1850ms;">然後點頭。</div>
+            <br />
+            <div class="fade" style="--d: 2500ms;">使用頻率非常高，</div>
+            <div class="fade" style="--d: 3000ms;">用途非常廣。</div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 第 3 頁：7 分人 -->
     <section class="page">
-      <div class="bg-big">風</div>
-      <div class="wrap">
-        <div class="kicker enter">Chapter 06</div>
-        <h2 class="enter delay">喜歡戶外的人</h2>
-        <p class="copy enter delay2">他喜歡戶外活動，
-喜歡玩 SUP，
-喜歡看山，
-也喜歡騎著檔車去山路兜風。</p>
-        <div class="outdoor enter delay2">
-          <div><b>SUP</b><span>on the water</span></div>
-          <div><b>山</b><span>quiet view</span></div>
-          <div><b>檔車</b><span>mountain road</span></div>
+      <div class="card">
+        <div class="content">
+          <div class="small-text">
+            <div class="fade" style="--d: 120ms;">他平常對食物的喜好，</div>
+            <div class="fade" style="--d: 520ms;">如果用 1 到 10 分來說，</div>
+
+            <div class="rating-wrap">
+              <div class="rating-line">
+                <div class="rating-fill"></div>
+              </div>
+              <div class="rating-nums">
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+              </div>
+            </div>
+
+            <div class="fade" style="--d: 3100ms;">大部分都是 <span class="gold em">7 分。</span></div>
+            <br />
+            <div class="fade" style="--d: 3600ms;">7 分對他而言，</div>
+            <div class="fade" style="--d: 4000ms;">是一個可以接受，</div>
+            <div class="fade" style="--d: 4400ms;">但還不到超級滿意的分數。</div>
+            <br />
+            <div class="fade" style="--d: 5000ms;">原來他不是5分人也不是8分人</div>
+            <div class="fade em" style="--d: 5500ms;">是7分人</div>
+
+            <div class="cert-stamp">7 分人認證</div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- 第 4 頁 -->
     <section class="page">
-      <div class="bg-big">6/30</div>
-      <div class="wrap grid">
-        <div class="side-word enter">6/30</div>
-        <div>
-          <div class="kicker enter">Chapter 07</div>
-          <h2 class="enter delay">還在了解他的人</h2>
-          <p class="copy enter delay2">最後正式介紹一次：
-
-這位是 6/30 的壽星。
-
-好像也沒辦法用一句話定義他，
-因為認識了兩年，
-到現在還是在了解他的過程。
-
-他低調、實際、話不多，
-但能肯定的是，
-他是一個心很善良，
-也很溫柔的人。</p>
+      <div class="card">
+        <div class="content">
+          <div class="text">
+            <div class="fade" style="--d: 150ms;">他不太追求儀式感。</div>
+            <br />
+            <div class="fade" style="--d: 950ms;">對他來說，</div>
+            <div class="fade" style="--d: 1450ms;">簡單、舒服、剛剛好，</div>
+            <div class="fade" style="--d: 1950ms;">就蠻 OK 了。</div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- 第 5 頁：處理中 -->
     <section class="page">
-      <div class="bg-big">Happy</div>
-      <div class="wrap">
-        <div class="panel enter">
-          <div class="kicker">Final Chapter</div>
-          <h2>生日快樂</h2>
-          <p class="copy">一直以來，
-謝謝你的包容與陪伴。
-
-希望這位壽星今年：
-工作多一點有趣的事，
-生活多一點開心的事，
-身體平安健康。
-
-還有，
-Miu 也要健健康康的。
-
-祝你明天的鐵板燒吃得愉快。</p>
-          <div class="small">6 / 30 ・ A little birthday page made for you</div>
+      <div class="card">
+        <div class="processing">……處理中</div>
+        <div class="content">
+          <div class="small-text">
+            <div class="fade" style="--d: 120ms;">他還有一個特色是：</div>
+            <br />
+            <div class="fade" style="--d: 700ms;">看起來情緒很穩定，</div>
+            <div class="fade" style="--d: 1150ms;">好像聽到什麼事都很淡定。</div>
+            <br />
+            <div class="fade" style="--d: 1950ms;">但其實，</div>
+            <div class="fade" style="--d: 3600ms;">有時候只是反應沒有那麼快。</div>
+            <br />
+            <div class="fade" style="--d: 4300ms;">他長得一臉和善，</div>
+            <div class="fade" style="--d: 4800ms;">但內心有自己一定的堅持。</div>
+          </div>
         </div>
       </div>
     </section>
 
-  </div>
-</main>
+    <!-- 第 6 頁：被記得 -->
+    <section class="page">
+      <div class="card">
+        <div class="content">
+          <div class="small-text center">
+            <div class="fade" style="--d: 120ms;">但有趣的是，</div>
+            <div class="fade" style="--d: 520ms;">這個人曾經說過：</div>
+            <br />
+            <div class="fade" style="--d: 1050ms;">「現在會記得別人生日的人很少了。」</div>
+            <br />
+            <div class="fade" style="--d: 1900ms;">所以今天這件事，</div>
+            <div class="fade" style="--d: 2350ms;">要特別註明一下：</div>
+            <br />
+            <div class="fade memory-focus" style="--d: 3050ms;">他有被記得。</div>
+            <br />
+            <div class="fade" style="--d: 3850ms;">而且不是手機提醒那種記得。</div>
+            <div class="fade" style="--d: 4250ms;">是真的有人記得。</div>
 
-<script>
-(function(){
-  var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
-  var nav = document.getElementById("nav");
-  var progress = document.getElementById("progress");
-  var confetti = document.getElementById("confetti");
-  var current = 0;
-  var locked = false;
-  var sx = 0;
-  var sy = 0;
+            <div class="stamp-area" aria-hidden="true">
+              <div class="stamp one">不是手機提醒</div>
+              <div class="stamp two">是真的有人記得</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  pages.forEach(function(_,i){
-    var d = document.createElement("button");
-    d.className = "dot" + (i===0 ? " active" : "");
-    d.setAttribute("aria-label","page " + (i+1));
-    d.addEventListener("click",function(){go(i);});
-    nav.appendChild(d);
-  });
+    <!-- 第 7 頁 -->
+    <section class="page">
+      <div class="card">
+        <div class="content">
+          <div class="small-text">
+            <div class="fade" style="--d: 120ms;">他不是很適合太感人的禮物。</div>
+            <br />
+            <div class="fade" style="--d: 850ms;">照片太多，他可能會尷尬。</div>
+            <div class="fade" style="--d: 1300ms;">文字太深，他可能會沉默。</div>
+            <div class="fade" style="--d: 1750ms;">太用力祝福，他可能不知道要回什麼。</div>
+            <br />
+            <div class="fade" style="--d: 2500ms;">所以只要讓他知道：</div>
+            <br />
+            <div class="fade em" style="--d: 3200ms;">有人記得他生日</div>
+            <div class="fade em" style="--d: 3650ms;">就好。</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  function update(){
-    pages.forEach(function(p,i){
-      p.classList.remove("active","prev");
-      if(i === current) p.classList.add("active");
-      else if(i < current) p.classList.add("prev");
+    <!-- 第 8 頁：Miu -->
+    <section class="page">
+      <div class="card">
+        <div class="paw-path" aria-hidden="true">
+          <div class="paw">♛</div>
+          <div class="paw">♛</div>
+          <div class="paw">♛</div>
+          <div class="paw">♛</div>
+        </div>
+
+        <div class="content">
+          <div class="small-text">
+            <div class="fade" style="--d: 120ms;">希望這位壽星今年：</div>
+            <br />
+            <div class="fade" style="--d: 750ms;">工作多一點有趣的事，</div>
+            <div class="fade" style="--d: 1200ms;">生活多一點開心的事，</div>
+            <div class="fade" style="--d: 1650ms;">身體平安健康。</div>
+            <br />
+            <div class="fade" style="--d: 2500ms;">還有，</div>
+            <div class="fade em" style="--d: 3100ms;">Miu 也要健健康康的。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第 9 頁 -->
+    <section class="page">
+      <div class="card">
+        <div class="content">
+          <div class="small-text">
+            <div class="fade" style="--d: 120ms;">最後正式介紹一次：</div>
+            <br />
+            <div class="fade" style="--d: 720ms;">這位是 6/30 的壽星。</div>
+            <br />
+            <div class="fade" style="--d: 1350ms;">沒辦法做什麼定義，</div>
+            <div class="fade" style="--d: 1800ms;">因為認識了兩年，</div>
+            <div class="fade" style="--d: 2250ms;">到現在還是在了解他的過程。</div>
+            <br />
+            <div class="fade" style="--d: 3050ms;">低調、實際、話不多，</div>
+            <div class="fade" style="--d: 3500ms;">但能肯定的是，</div>
+            <div class="fade em" style="--d: 4050ms;">他是一個心很善良、</div>
+            <div class="fade em" style="--d: 4550ms;">也很溫柔的人。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第 10 頁 -->
+    <section class="page">
+      <div class="card">
+        <div class="content center">
+          <div class="text">
+            <div class="fade" style="--d: 150ms;">一直以來，</div>
+            <div class="fade" style="--d: 650ms;">謝謝你的包容與陪伴。</div>
+            <br />
+            <div class="fade" style="--d: 1350ms;">祝你明天的鐵板燒吃得愉快。</div>
+
+            <div class="teppan" aria-hidden="true">
+              <div class="steam s1"></div>
+              <div class="steam s2"></div>
+              <div class="steam s3"></div>
+              <div class="plate"></div>
+            </div>
+
+            <br />
+            <div class="fade em" style="--d: 3000ms;">生日快樂。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="hint">左右滑動</div>
+  <div class="dots" id="dots"></div>
+
+  <script>
+    const pages = Array.from(document.querySelectorAll(".page"));
+    const dotsWrap = document.getElementById("dots");
+    const deck = document.getElementById("deck");
+
+    let current = 0;
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+
+    pages.forEach((_, index) => {
+      const dot = document.createElement("div");
+      dot.className = "dot";
+      if (index === 0) dot.classList.add("active");
+      dotsWrap.appendChild(dot);
     });
-    Array.prototype.slice.call(document.querySelectorAll(".dot")).forEach(function(d,i){
-      d.classList.toggle("active",i===current);
-    });
-    progress.style.width = ((current + 1) / pages.length * 100) + "%";
-    if(current === pages.length - 1) boom();
-  }
 
-  function go(i){
-    if(locked) return;
-    if(i < 0 || i >= pages.length || i === current) return;
-    locked = true;
-    current = i;
-    update();
-    setTimeout(function(){locked = false;}, 900);
-  }
+    const dots = Array.from(document.querySelectorAll(".dot"));
 
-  function next(){go(current+1)}
-  function prev(){go(current-1)}
+    function updatePages() {
+      pages.forEach((page, index) => {
+        page.classList.remove("active", "prev");
 
-  window.addEventListener("wheel",function(e){
-    if(Math.abs(e.deltaY) < 12) return;
-    if(e.deltaY > 0) next(); else prev();
-  },{passive:true});
+        if (index < current) {
+          page.classList.add("prev");
+        }
 
-  window.addEventListener("keydown",function(e){
-    if(e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === " ") next();
-    if(e.key === "ArrowUp" || e.key === "ArrowLeft") prev();
-  });
+        if (index === current) {
+          page.classList.add("active");
 
-  window.addEventListener("touchstart",function(e){
-    sx = e.changedTouches[0].clientX;
-    sy = e.changedTouches[0].clientY;
-  },{passive:true});
+          // 重新觸發該頁動畫
+          page.style.animation = "none";
+          page.offsetHeight;
+          page.style.animation = "";
+        }
+      });
 
-  window.addEventListener("touchend",function(e){
-    var x = e.changedTouches[0].clientX;
-    var dx = x - sx;
-    if(Math.abs(dx) > 42){
-      if(dx < 0) next(); else prev();
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === current);
+      });
     }
-  },{passive:true});
 
-  document.querySelectorAll(".flip-card").forEach(function(card){
-    card.addEventListener("click",function(e){
-      e.stopPropagation();
-      card.classList.toggle("flipped");
-    });
-  });
-
-  function boom(){
-    if(confetti.dataset.done === "1") return;
-    confetti.dataset.done = "1";
-    var colors = ["#07399b","#f4b942","#e86a5a","#6ba86f","#ffffff"];
-    for(var i=0;i<80;i++){
-      var c = document.createElement("i");
-      c.style.left = Math.random()*100 + "vw";
-      c.style.background = colors[Math.floor(Math.random()*colors.length)];
-      c.style.animationDelay = (Math.random()*0.5) + "s";
-      c.style.animationDuration = (1.4 + Math.random()*1.5) + "s";
-      c.style.transform = "rotate(" + Math.random()*180 + "deg)";
-      confetti.appendChild(c);
-      setTimeout(function(el){ if(el && el.parentNode) el.parentNode.removeChild(el); }, 3300, c);
+    function goNext() {
+      if (current < pages.length - 1) {
+        current += 1;
+        updatePages();
+      }
     }
-  }
 
-  update();
-})();
-</script>
+    function goPrev() {
+      if (current > 0) {
+        current -= 1;
+        updatePages();
+      }
+    }
+
+    deck.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isDragging = true;
+    }, { passive: true });
+
+    deck.addEventListener("touchend", (e) => {
+      if (!isDragging) return;
+
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffX = endX - startX;
+      const diffY = endY - startY;
+
+      if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) {
+          goNext();
+        } else {
+          goPrev();
+        }
+      }
+
+      isDragging = false;
+    }, { passive: true });
+
+    // 電腦預覽時可用鍵盤左右鍵
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowLeft") goPrev();
+    });
+
+    // 電腦預覽時也可以用滑鼠拖曳
+    deck.addEventListener("mousedown", (e) => {
+      startX = e.clientX;
+      startY = e.clientY;
+      isDragging = true;
+    });
+
+    deck.addEventListener("mouseup", (e) => {
+      if (!isDragging) return;
+
+      const diffX = e.clientX - startX;
+      const diffY = e.clientY - startY;
+
+      if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) {
+          goNext();
+        } else {
+          goPrev();
+        }
+      }
+
+      isDragging = false;
+    });
+
+    updatePages();
+  </script>
 </body>
 </html>
