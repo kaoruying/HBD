@@ -1,1561 +1,493 @@
 <!DOCTYPE html>
-
 <html lang="zh-Hant">
-
 <head>
-
-<meta charset="UTF-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-
-<title>6/30 Birthday Profile</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>6/30 Happy Birthday</title>
 <style>
-
 :root{
-
-  --bg:#f4efe6;
-
-  --bg2:#e5d6c2;
-
-  --ink:#08379b;
-
-  --text:#191716;
-
-  --muted:#8b7a68;
-
-  --card:#fffaf1;
-
-  --line:rgba(25,23,22,.16);
-
-  --blueLine:rgba(8,55,155,.18);
-
+  --bg:#f6efe6;
+  --cream:#fff8ed;
+  --ink:#08399b;
+  --text:#171412;
+  --muted:#8b7765;
+  --line:rgba(23,20,18,.14);
 }
-
-*{
-
-  box-sizing:border-box;
-
-  -webkit-tap-highlight-color:transparent;
-
-}
-
-html{
-
-  scroll-behavior:smooth;
-
-}
-
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
 body{
-
-  margin:0;
-
-  background:
-
-    radial-gradient(circle at 12% 10%, rgba(255,255,255,.85), transparent 26%),
-
-    radial-gradient(circle at 88% 0%, rgba(255,255,255,.55), transparent 22%),
-
-    linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
-
   color:var(--text);
-
+  background:linear-gradient(135deg,#f8f1e8,#e6d4bd);
   font-family:"Kaiti TC","BiauKai","DFKai-SB","PingFang TC","Microsoft JhengHei",serif;
-
-  overflow-x:hidden;
-
 }
-
 body::before{
-
-  content:"";
-
-  position:fixed;
-
-  inset:0;
-
-  background-image:radial-gradient(rgba(25,23,22,.05) .6px, transparent .6px);
-
-  background-size:9px 9px;
-
-  opacity:.25;
-
-  pointer-events:none;
-
-  z-index:0;
-
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(rgba(23,20,18,.055) .55px,transparent .55px);
+  background-size:8px 8px;opacity:.25;
 }
-
-a{
-
-  color:inherit;
-
-  text-decoration:none;
-
+#app{position:relative;width:100vw;height:100svh;overflow:hidden}
+.progress{position:fixed;left:0;top:0;height:3px;background:var(--ink);width:0%;z-index:80;transition:width .65s cubic-bezier(.2,.75,.2,1)}
+.top{
+  position:fixed;left:0;right:0;top:0;z-index:70;
+  padding:14px 16px;display:flex;justify-content:space-between;pointer-events:none;
 }
-
-.header{
-
-  position:fixed;
-
-  top:0;
-
-  left:0;
-
-  right:0;
-
-  z-index:50;
-
-  padding:14px 16px;
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  pointer-events:none;
-
+.pill{
+  pointer-events:auto;display:inline-flex;align-items:center;min-height:34px;
+  padding:8px 13px;border-radius:999px;border:1px solid rgba(23,20,18,.12);
+  background:rgba(255,248,237,.72);backdrop-filter:blur(14px);
+  color:rgba(23,20,18,.68);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;
 }
-
-.header span,
-
-.header a{
-
-  pointer-events:auto;
-
-  display:inline-flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  min-height:36px;
-
-  padding:8px 13px;
-
-  border:1px solid rgba(25,23,22,.12);
-
-  border-radius:999px;
-
-  background:rgba(255,250,241,.72);
-
-  backdrop-filter:blur(12px);
-
-  color:rgba(25,23,22,.66);
-
+.slider{position:relative;width:100%;height:100%}
+.page{
+  position:absolute;inset:0;width:100%;height:100svh;
+  display:flex;align-items:center;justify-content:center;
+  padding:78px 18px 74px;
+  opacity:0;visibility:hidden;transform:translateY(100%) scale(.96);
+  transition:transform .9s cubic-bezier(.2,.78,.18,1),opacity .65s ease,visibility .65s ease;
+  overflow:hidden;
+}
+.page.active{opacity:1;visibility:visible;transform:translateY(0) scale(1);z-index:5}
+.page.prev{opacity:0;visibility:hidden;transform:translateY(-100%) scale(.96)}
+.bg-big{
+  position:absolute;right:-.08em;bottom:-.18em;z-index:0;
+  color:rgba(8,57,155,.08);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:11px;
-
-  letter-spacing:.1em;
-
-  text-transform:uppercase;
-
+  font-size:clamp(130px,35vw,460px);font-weight:950;letter-spacing:-.14em;line-height:.78;
+  pointer-events:none;
 }
-
-.section{
-
-  position:relative;
-
-  z-index:1;
-
-  min-height:100svh;
-
-  padding:88px 18px 64px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-}
-
-.wrap{
-
-  width:min(100%,1120px);
-
-  margin:0 auto;
-
-}
-
-.hero-grid{
-
-  display:grid;
-
-  grid-template-columns:1.15fr .85fr;
-
-  gap:28px;
-
-  align-items:end;
-
-}
-
+.wrap{position:relative;z-index:2;width:min(100%,1120px);margin:0 auto}
+.grid{display:grid;grid-template-columns:1.12fr .88fr;gap:36px;align-items:center}
 .kicker{
-
+  color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:13px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;
+}
+h1{
+  margin:0;color:var(--ink);font-size:clamp(76px,18vw,190px);
+  line-height:.78;letter-spacing:-.11em;font-weight:800;
+}
+h2{
+  margin:0 0 24px;color:var(--ink);font-size:clamp(44px,10vw,112px);
+  line-height:.9;letter-spacing:-.09em;font-weight:800;
+}
+.lead{
+  margin:28px 0 0;white-space:pre-line;font-size:clamp(24px,5vw,48px);
+  line-height:1.28;letter-spacing:-.02em;
+}
+.copy{
+  margin:0;max-width:780px;white-space:pre-line;font-size:clamp(22px,4.2vw,40px);
+  line-height:1.48;letter-spacing:-.012em;
+}
+.small{
+  margin-top:22px;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:14px;line-height:1.85;max-width:560px;
+}
+.deck{
+  position:relative;min-height:420px;perspective:1300px;
+}
+.stack-card{
+  position:absolute;inset:0;border-radius:42px;border:1px solid rgba(23,20,18,.13);
+  background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(255,248,237,.72));
+  box-shadow:0 34px 78px rgba(64,43,22,.14);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.stack-card:nth-child(1){transform:rotate(-6deg) translate(-18px,20px);opacity:.42}
+.stack-card:nth-child(2){transform:rotate(5deg) translate(18px,-12px);opacity:.62}
+.stack-card:nth-child(3){animation:float 4.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-14px) rotate(1deg)}}
+.stack-card::before{
+  content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(8,57,155,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(8,57,155,.13) 1px,transparent 1px);
+  background-size:34px 34px;opacity:.45;mask-image:linear-gradient(to bottom,#000,transparent 86%);
+}
+.number{
+  position:relative;z-index:1;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:clamp(92px,18vw,190px);line-height:.82;font-weight:950;letter-spacing:-.13em;
+}
+.card-label{
+  position:absolute;right:26px;bottom:22px;color:rgba(8,57,155,.28);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  color:var(--muted);
-
-  font-size:13px;
-
-  letter-spacing:.18em;
-
-  text-transform:uppercase;
-
-  margin-bottom:18px;
-
+  font-size:14px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;
 }
-
-.hero-title{
-
-  margin:0;
-
-  color:var(--ink);
-
-  font-size:clamp(72px,18vw,190px);
-
-  line-height:.82;
-
-  letter-spacing:-.08em;
-
-  font-weight:700;
-
+.panel{
+  border:1px solid rgba(23,20,18,.13);border-radius:36px;background:rgba(255,248,237,.62);
+  padding:28px;box-shadow:0 24px 60px rgba(64,43,22,.1);
 }
-
-.hero-title .wave{
-
-  letter-spacing:-.12em;
-
+.flip-card{width:100%;min-height:230px;perspective:1400px;cursor:pointer}
+.flip-inner{position:relative;width:100%;min-height:230px;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.2,.72,.2,1)}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-face{
+  position:absolute;inset:0;padding:26px;border:1px solid rgba(23,20,18,.13);border-radius:34px;
+  background:rgba(255,248,237,.66);backface-visibility:hidden;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;
 }
-
-.hero-lead{
-
-  margin:28px 0 0;
-
-  white-space:pre-line;
-
-  font-size:clamp(22px,4.2vw,42px);
-
-  line-height:1.35;
-
-  letter-spacing:.02em;
-
+.flip-face::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.7),transparent 42%)}
+.flip-back{transform:rotateY(180deg);background:rgba(8,57,155,.93);color:var(--cream)}
+.flip-label{position:relative;z-index:1;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.flip-back .flip-label{color:rgba(255,248,237,.72)}
+.flip-main{position:relative;z-index:1;color:var(--ink);font-size:clamp(28px,6vw,64px);line-height:1.02;letter-spacing:-.06em}
+.flip-back .flip-main{color:var(--cream)}
+.tap{position:relative;z-index:1;color:rgba(23,20,18,.45);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.flip-back .tap{color:rgba(255,248,237,.68)}
+.side-word{
+  color:rgba(8,57,155,.14);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:clamp(86px,18vw,230px);font-weight:950;line-height:.76;letter-spacing:-.13em;
 }
-
-.hero-small{
-
-  margin-top:22px;
-
-  color:var(--muted);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:14px;
-
-  line-height:1.8;
-
-  max-width:520px;
-
+.outdoor{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.outdoor div{
+  min-height:170px;border:1px solid rgba(23,20,18,.13);border-radius:30px;background:rgba(255,248,237,.62);
+  padding:20px 16px;display:flex;flex-direction:column;justify-content:space-between;transition:.45s ease;
 }
-
-.avatar-card{
-
-  min-height:430px;
-
-  border-radius:38px;
-
-  border:1px solid rgba(25,23,22,.12);
-
-  background:
-
-    linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,250,241,.72)),
-
-    var(--card);
-
-  box-shadow:0 30px 70px rgba(65,45,25,.12);
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  position:relative;
-
-  overflow:hidden;
-
+.outdoor div:hover{transform:translateY(-8px) rotate(-1deg)}
+.outdoor b{
+  color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:clamp(34px,7vw,72px);line-height:.9;letter-spacing:-.08em;
 }
-
-.avatar-card::before{
-
-  content:"";
-
-  position:absolute;
-
-  inset:0;
-
-  background-image:
-
-    linear-gradient(var(--blueLine) 1px, transparent 1px),
-
-    linear-gradient(90deg, var(--blueLine) 1px, transparent 1px);
-
-  background-size:34px 34px;
-
-  opacity:.38;
-
-  mask-image:linear-gradient(to bottom, rgba(0,0,0,.9), transparent 85%);
-
+.outdoor span{
+  color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:12px;letter-spacing:.12em;text-transform:uppercase;
 }
-
-.avatar-card::after{
-
-  content:"6/30";
-
-  position:absolute;
-
-  right:24px;
-
-  bottom:18px;
-
-  color:rgba(8,55,155,.16);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:64px;
-
-  font-weight:900;
-
-  letter-spacing:-.08em;
-
+.nav{
+  position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:60;display:grid;gap:9px;
 }
-
-.avatar{
-
-  width:min(78%,340px);
-
-  position:relative;
-
-  z-index:2;
-
-  animation:float 4.5s ease-in-out infinite;
-
+.dot{
+  width:9px;height:9px;border-radius:50%;border:1px solid rgba(8,57,155,.45);background:transparent;
+  transition:.35s ease;
 }
-
-@keyframes float{
-
-  0%,100%{ transform:translateY(0) rotate(-1deg); }
-
-  50%{ transform:translateY(-14px) rotate(1deg); }
-
+.dot.active{background:var(--ink);transform:scale(1.35)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.confetti i{
+  position:absolute;top:-20px;width:8px;height:14px;background:var(--ink);opacity:.9;
+  animation:fall 1.8s linear forwards;
 }
-
-.scroll-note{
-
-  margin-top:36px;
-
-  display:flex;
-
-  align-items:center;
-
-  gap:12px;
-
-  color:var(--muted);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:13px;
-
-  letter-spacing:.12em;
-
-  text-transform:uppercase;
-
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(720deg);opacity:0}
 }
-
-.scroll-note::before{
-
-  content:"";
-
-  width:54px;
-
-  height:1px;
-
-  background:rgba(25,23,22,.28);
-
+.page.active .enter{
+  animation:enter .9s cubic-bezier(.2,.78,.18,1) both;
 }
-
-.marquee{
-
-  position:relative;
-
-  z-index:1;
-
-  overflow:hidden;
-
-  border-top:1px solid var(--line);
-
-  border-bottom:1px solid var(--line);
-
-  background:rgba(255,250,241,.38);
-
+.page.active .enter.delay{animation-delay:.12s}
+.page.active .enter.delay2{animation-delay:.24s}
+@keyframes enter{
+  from{opacity:0;transform:translateY(50px)}
+  to{opacity:1;transform:translateY(0)}
 }
-
-.marquee-track{
-
-  display:flex;
-
-  width:max-content;
-
-  animation:marquee 26s linear infinite;
-
-}
-
-.marquee span{
-
-  display:block;
-
-  padding:20px 28px;
-
-  color:var(--ink);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:14px;
-
-  font-weight:800;
-
-  letter-spacing:.18em;
-
-  text-transform:uppercase;
-
-  white-space:nowrap;
-
-}
-
-@keyframes marquee{
-
-  from{ transform:translateX(0); }
-
-  to{ transform:translateX(-50%); }
-
-}
-
-.intro{
-
-  align-items:flex-start;
-
-}
-
-.intro-layout{
-
-  display:grid;
-
-  grid-template-columns:.8fr 1.2fr;
-
-  gap:40px;
-
-  align-items:start;
-
-}
-
-.side-meta{
-
-  position:sticky;
-
-  top:96px;
-
-  padding-top:8px;
-
-}
-
-.side-meta .dot{
-
-  width:11px;
-
-  height:11px;
-
-  border-radius:50%;
-
-  background:var(--ink);
-
-  margin-bottom:26px;
-
-}
-
-.side-meta h2{
-
-  margin:0;
-
-  color:var(--ink);
-
-  font-size:clamp(48px,10vw,120px);
-
-  line-height:.86;
-
-  letter-spacing:-.08em;
-
-}
-
-.meta-list{
-
-  margin-top:32px;
-
-  display:grid;
-
-  gap:12px;
-
-  color:var(--muted);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:13px;
-
-  letter-spacing:.1em;
-
-  text-transform:uppercase;
-
-}
-
-.statement{
-
-  border-top:1px solid var(--line);
-
-  padding-top:20px;
-
-}
-
-.statement .label{
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  color:var(--muted);
-
-  font-size:13px;
-
-  letter-spacing:.18em;
-
-  text-transform:uppercase;
-
-  margin-bottom:24px;
-
-}
-
-.statement p{
-
-  margin:0;
-
-  font-size:clamp(31px,6vw,78px);
-
-  line-height:1.08;
-
-  letter-spacing:-.045em;
-
-  color:var(--text);
-
-}
-
-.statement p b{
-
-  color:var(--ink);
-
-  font-weight:700;
-
-}
-
-.chapter{
-
-  border-top:1px solid var(--line);
-
-}
-
-.chapter-grid{
-
-  display:grid;
-
-  grid-template-columns:.62fr 1.38fr;
-
-  gap:34px;
-
-  align-items:start;
-
-}
-
-.chapter-index{
-
-  position:sticky;
-
-  top:96px;
-
-  min-height:280px;
-
-}
-
-.chapter-no{
-
-  color:var(--ink);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:15px;
-
-  font-weight:900;
-
-  letter-spacing:.18em;
-
-  text-transform:uppercase;
-
-}
-
-.chapter-word{
-
-  margin-top:22px;
-
-  color:rgba(8,55,155,.15);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:clamp(84px,18vw,220px);
-
-  line-height:.78;
-
-  font-weight:900;
-
-  letter-spacing:-.12em;
-
-}
-
-.chapter-content{
-
-  display:grid;
-
-  gap:26px;
-
-}
-
-.chapter-title{
-
-  margin:0;
-
-  color:var(--ink);
-
-  font-size:clamp(42px,8vw,96px);
-
-  line-height:.95;
-
-  letter-spacing:-.075em;
-
-  font-weight:700;
-
-}
-
-.chapter-text{
-
-  margin:0;
-
-  max-width:760px;
-
-  white-space:pre-line;
-
-  font-size:clamp(22px,4.2vw,40px);
-
-  line-height:1.52;
-
-  letter-spacing:-.01em;
-
-}
-
-.detail-card{
-
-  margin-top:4px;
-
-  border:1px solid rgba(25,23,22,.12);
-
-  border-radius:34px;
-
-  background:rgba(255,250,241,.55);
-
-  padding:24px;
-
-  display:grid;
-
-  gap:18px;
-
-}
-
-.detail-row{
-
-  display:grid;
-
-  grid-template-columns:150px 1fr;
-
-  gap:18px;
-
-  border-top:1px solid rgba(25,23,22,.1);
-
-  padding-top:18px;
-
-}
-
-.detail-row:first-child{
-
-  border-top:0;
-
-  padding-top:0;
-
-}
-
-.detail-row .key{
-
-  color:var(--muted);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:12px;
-
-  letter-spacing:.14em;
-
-  text-transform:uppercase;
-
-}
-
-.detail-row .value{
-
-  font-size:clamp(18px,3.2vw,28px);
-
-  line-height:1.55;
-
-}
-
-.outdoor-grid{
-
-  display:grid;
-
-  grid-template-columns:repeat(3,1fr);
-
-  gap:14px;
-
-}
-
-.outdoor-item{
-
-  min-height:210px;
-
-  border:1px solid rgba(25,23,22,.12);
-
-  border-radius:32px;
-
-  background:rgba(255,250,241,.55);
-
-  padding:22px 18px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  justify-content:space-between;
-
-}
-
-.outdoor-item .big{
-
-  color:var(--ink);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:clamp(34px,7vw,72px);
-
-  line-height:.92;
-
-  font-weight:900;
-
-  letter-spacing:-.08em;
-
-}
-
-.outdoor-item .small{
-
-  color:var(--muted);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:13px;
-
-  line-height:1.6;
-
-  letter-spacing:.08em;
-
-  text-transform:uppercase;
-
-}
-
-.final{
-
-  text-align:center;
-
-}
-
-.final-card{
-
-  width:min(100%,980px);
-
-  margin:0 auto;
-
-  border:1px solid rgba(25,23,22,.12);
-
-  border-radius:44px;
-
-  background:
-
-    radial-gradient(circle at 50% 0%, rgba(255,255,255,.78), transparent 36%),
-
-    rgba(255,250,241,.68);
-
-  box-shadow:0 30px 80px rgba(65,45,25,.12);
-
-  padding:48px 24px 56px;
-
-}
-
-.final-title{
-
-  margin:18px 0 26px;
-
-  color:var(--ink);
-
-  font-size:clamp(58px,13vw,156px);
-
-  line-height:.86;
-
-  letter-spacing:-.1em;
-
-  font-weight:700;
-
-}
-
-.final-text{
-
-  margin:0 auto;
-
-  max-width:720px;
-
-  white-space:pre-line;
-
-  font-size:clamp(23px,4.6vw,42px);
-
-  line-height:1.55;
-
-}
-
-.sign{
-
-  margin-top:34px;
-
-  color:var(--muted);
-
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-
-  font-size:13px;
-
-  letter-spacing:.12em;
-
-  text-transform:uppercase;
-
-}
-
-svg{
-
-  stroke:var(--ink);
-
-  fill:none;
-
-  stroke-width:4;
-
-  stroke-linecap:round;
-
-  stroke-linejoin:round;
-
-}
-
-.eye{
-
-  fill:var(--ink);
-
-  stroke:none;
-
-}
-
-.soft{
-
-  stroke-width:2.4;
-
-  opacity:.65;
-
-}
-
 @media(max-width:860px){
-
-  .section{
-
-    min-height:auto;
-
-    padding:92px 16px 68px;
-
-  }
-
-  .hero{
-
-    min-height:100svh;
-
-  }
-
-  .hero-grid,
-
-  .intro-layout,
-
-  .chapter-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .avatar-card{
-
-    min-height:330px;
-
-    border-radius:34px;
-
-  }
-
-  .side-meta,
-
-  .chapter-index{
-
-    position:relative;
-
-    top:auto;
-
-    min-height:auto;
-
-  }
-
-  .statement p{
-
-    font-size:clamp(38px,11vw,72px);
-
-  }
-
-  .chapter-word{
-
-    display:none;
-
-  }
-
-  .chapter-content{
-
-    gap:22px;
-
-  }
-
-  .detail-row{
-
-    grid-template-columns:1fr;
-
-    gap:8px;
-
-  }
-
-  .outdoor-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .outdoor-item{
-
-    min-height:160px;
-
-  }
-
+  .grid{grid-template-columns:1fr;gap:28px}
+  .deck{min-height:300px}
+  .side-word{display:none}
+  .outdoor{grid-template-columns:1fr}
+  .nav{display:none}
 }
-
 @media(max-width:520px){
-
-  .header{
-
-    padding:12px;
-
-  }
-
-  .header span,
-
-  .header a{
-
-    min-height:32px;
-
-    padding:7px 10px;
-
-    font-size:10px;
-
-  }
-
-  .hero-title{
-
-    font-size:clamp(72px,22vw,112px);
-
-  }
-
-  .hero-lead{
-
-    font-size:24px;
-
-  }
-
-  .chapter-title{
-
-    font-size:clamp(42px,12vw,64px);
-
-  }
-
-  .chapter-text,
-
-  .final-text{
-
-    font-size:23px;
-
-  }
-
-  .detail-card{
-
-    padding:20px;
-
-    border-radius:28px;
-
-  }
-
-  .avatar{
-
-    width:min(86%,290px);
-
-  }
-
-  .final-card{
-
-    border-radius:34px;
-
-  }
-
+  .top{padding:12px}.pill{min-height:32px;font-size:10px;padding:7px 10px}
+  .page{padding:74px 16px 74px}
+  h1{font-size:clamp(72px,23vw,112px)}
+  h2{font-size:clamp(43px,12vw,66px)}
+  .lead{font-size:24px}
+  .copy{font-size:22px}
+  .number{font-size:clamp(90px,28vw,140px)}
+  .flip-card,.flip-inner{min-height:220px}
 }
-
 </style>
-
 </head>
-
 <body>
+<div class="progress" id="progress"></div>
+<header class="top"><span class="pill">6/30 Birthday Story</span><span class="pill">Swipe / Tap</span></header>
+<div class="nav" id="nav"></div>
+<div class="confetti" id="confetti"></div>
 
-<header class="header">
+<main id="app">
+  <div class="slider" id="slider">
 
-  <span>6/30 Birthday Story</span>
-
-  <a href="#start">Start</a>
-
-</header>
-
-<main id="start">
-
-<section class="section hero">
-
-  <div class="wrap hero-grid">
-
-    <div>
-
-      <div class="kicker">Today’s Birthday Profile</div>
-
-      <h1 class="hero-title">hi<br><span class="wave">你好</span> 👋</h1>
-
-      <p class="hero-lead">今天要介紹一位
-
+    <section class="page active">
+      <div class="bg-big">6/30</div>
+      <div class="wrap grid">
+        <div>
+          <div class="kicker enter">Today’s Birthday Page</div>
+          <h1 class="hero-title enter delay">hi<br>你好 👋</h1>
+          <p class="lead enter delay2">今天要介紹一位
 6/30 的壽星。</p>
-
-      <div class="hero-small">不是很高調，也不是很煽情。比較像是一份低調、可愛、帶一點觀察的人物誌。</div>
-
-      <div class="scroll-note">scroll to read</div>
-
-    </div>
-
-    <div class="avatar-card">
-
-      <svg class="avatar" viewBox="0 0 320 320" aria-hidden="true">
-
-        <path d="M80 94 C110 38, 214 38, 240 92" />
-
-        <path d="M92 88 C124 54, 160 54, 152 110" />
-
-        <path d="M228 88 C196 54, 160 54, 168 110" />
-
-        <path d="M95 120 C100 194, 220 194, 225 120" />
-
-        <circle cx="125" cy="134" r="28" />
-
-        <circle cx="196" cy="134" r="28" />
-
-        <path d="M152 133 C161 125, 167 125, 176 133" />
-
-        <circle class="eye" cx="125" cy="134" r="8" />
-
-        <circle class="eye" cx="196" cy="134" r="8" />
-
-        <path d="M143 172 C160 183, 177 183, 194 172" />
-
-        <path d="M106 114 L87 116" />
-
-        <path d="M214 116 L233 116" />
-
-        <path d="M86 136 C64 132, 64 167, 87 164" />
-
-        <path d="M233 136 C256 132, 256 167, 233 164" />
-
-        <path class="soft" d="M123 102 C132 97, 139 97, 146 102" />
-
-        <path class="soft" d="M175 102 C184 97, 191 97, 198 102" />
-
-        <path d="M73 170 C48 156, 44 132, 55 116" />
-
-        <path d="M53 116 C41 106, 49 93, 62 101" />
-
-        <path d="M61 103 L81 124" />
-
-        <path d="M50 124 L72 135" />
-
-        <path d="M49 143 L73 146" />
-
-      </svg>
-
-    </div>
-
-  </div>
-
-</section>
-
-<div class="marquee">
-
-  <div class="marquee-track">
-
-    <span>he is remembered</span>
-
-    <span>not a phone reminder</span>
-
-    <span>birthday profile</span>
-
-    <span>6 / 30</span>
-
-    <span>he is remembered</span>
-
-    <span>not a phone reminder</span>
-
-    <span>birthday profile</span>
-
-    <span>6 / 30</span>
-
-  </div>
-
-</div>
-
-<section class="section intro">
-
-  <div class="wrap intro-layout">
-
-    <div class="side-meta">
-
-      <div class="dot"></div>
-
-      <h2>A Birthday<br>Profile.</h2>
-
-      <div class="meta-list">
-
-        <div>• Section</div>
-
-        <div>Details</div>
-
-        <div>Description</div>
-
+        </div>
+        <div class="deck enter delay">
+          <div class="stack-card"></div><div class="stack-card"></div>
+          <div class="stack-card"><div class="number">6<br>30</div><div class="card-label">birthday</div></div>
+        </div>
       </div>
+    </section>
 
-    </div>
-
-    <div class="statement">
-
-      <div class="label">about</div>
-
-      <p>
-
-        這不是一張普通生日卡。<br>
-
-        這是一份關於一位<br>
-
-        <b>話不多、但很常被提起的人</b>的小小介紹。
-
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section chapter">
-
-  <div class="wrap chapter-grid">
-
-    <div class="chapter-index">
-
-      <div class="chapter-no">Chapter I</div>
-
-      <div class="chapter-word">嗯</div>
-
-    </div>
-
-    <div class="chapter-content">
-
-      <h2 class="chapter-title">很常出現在我的故事裡的人</h2>
-
-      <p class="chapter-text">今天要介紹的這一位，
-
+    <section class="page">
+      <div class="bg-big">嗯</div>
+      <div class="wrap grid">
+        <div class="side-word enter">嗯</div>
+        <div>
+          <div class="kicker enter">Chapter 01</div>
+          <h2 class="enter delay">很常出現在我的故事裡的人</h2>
+          <p class="copy enter delay2">今天要介紹的這一位，
 是一位平常話不多，
-
 但很常出現在我的故事裡的人。
 
 他的常見回覆是：「嗯。」
-
 伴隨著睜大圓圓的眼睛，
-
 然後點頭。
 
 使用頻率非常高，
-
 用途非常廣。</p>
-
-      <div class="detail-card">
-
-        <div class="detail-row">
-
-          <div class="key">Feature</div>
-
-          <div class="value">話不多，但存在感很穩。</div>
-
         </div>
-
-        <div class="detail-row">
-
-          <div class="key">Common Reply</div>
-
-          <div class="value">「嗯。」</div>
-
-        </div>
-
       </div>
+    </section>
 
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section chapter">
-
-  <div class="wrap chapter-grid">
-
-    <div class="chapter-index">
-
-      <div class="chapter-no">Chapter II</div>
-
-      <div class="chapter-word">7</div>
-
-    </div>
-
-    <div class="chapter-content">
-
-      <h2 class="chapter-title">食物大部分都是 7 分的人</h2>
-
-      <p class="chapter-text">他平常對食物的喜好，
-
+    <section class="page">
+      <div class="bg-big">7</div>
+      <div class="wrap grid">
+        <div>
+          <div class="kicker enter">Chapter 02</div>
+          <h2 class="enter delay">食物大部分都是 7 分的人</h2>
+          <p class="copy enter delay2">他平常對食物的喜好，
 如果用 1 到 10 分來說，
 
 大部分都是 7 分。
 
 7 分對他而言，
-
 是一個可以接受，
-
 但還不到超級滿意的分數。</p>
-
-      <div class="detail-card">
-
-        <div class="detail-row">
-
-          <div class="key">Taste Scale</div>
-
-          <div class="value">7 分：可以接受，但還不到超級滿意。</div>
-
         </div>
-
+        <div class="flip-card enter delay2">
+          <div class="flip-inner">
+            <div class="flip-face"><div class="flip-label">rating</div><div class="flip-main">7 / 10</div><div class="tap">點一下翻牌</div></div>
+            <div class="flip-face flip-back"><div class="flip-label">meaning</div><div class="flip-main">可以接受，<br>但還不到超級滿意。</div><div class="tap">再點一下翻回來</div></div>
+          </div>
+        </div>
       </div>
+    </section>
 
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section chapter">
-
-  <div class="wrap chapter-grid">
-
-    <div class="chapter-index">
-
-      <div class="chapter-no">Chapter III</div>
-
-      <div class="chapter-word">OK</div>
-
-    </div>
-
-    <div class="chapter-content">
-
-      <h2 class="chapter-title">簡單、舒服、剛剛好的人</h2>
-
-      <p class="chapter-text">他不太追求儀式感。
+    <section class="page">
+      <div class="bg-big">OK</div>
+      <div class="wrap grid">
+        <div class="flip-card enter">
+          <div class="flip-inner">
+            <div class="flip-face"><div class="flip-label">preference</div><div class="flip-main">簡單。<br>舒服。<br>剛剛好。</div><div class="tap">點一下翻牌</div></div>
+            <div class="flip-face flip-back"><div class="flip-label">answer</div><div class="flip-main">這樣就<br>蠻 OK 了。</div><div class="tap">再點一下翻回來</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="kicker enter">Chapter 03</div>
+          <h2 class="enter delay">簡單、舒服、剛剛好的人</h2>
+          <p class="copy enter delay2">他不太追求儀式感。
 
 對他來說，
-
 簡單、舒服、剛剛好，
-
 就蠻 OK 了。</p>
-
-      <div class="detail-card">
-
-        <div class="detail-row">
-
-          <div class="key">Preference</div>
-
-          <div class="value">不用太滿，也不用太用力。剛剛好就可以。</div>
-
         </div>
-
       </div>
+    </section>
 
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section chapter">
-
-  <div class="wrap chapter-grid">
-
-    <div class="chapter-index">
-
-      <div class="chapter-no">Chapter IV</div>
-
-      <div class="chapter-word">Calm</div>
-
-    </div>
-
-    <div class="chapter-content">
-
-      <h2 class="chapter-title">看起來淡定，但其實很有自己的堅持</h2>
-
-      <p class="chapter-text">他還有一個特色是：
+    <section class="page">
+      <div class="bg-big">Calm</div>
+      <div class="wrap grid">
+        <div class="side-word enter">Calm</div>
+        <div>
+          <div class="kicker enter">Chapter 04</div>
+          <h2 class="enter delay">看起來淡定，但其實很有自己的堅持</h2>
+          <p class="copy enter delay2">他還有一個特色是：
 
 看起來情緒很穩定，
-
 好像聽到什麼事都很淡定。
 
 但其實，
-
 有時候只是反應沒有那麼快。
 
 他長得一臉和善，
-
 但內心有自己一定的堅持。</p>
+        </div>
+      </div>
+    </section>
 
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section chapter">
-
-  <div class="wrap chapter-grid">
-
-    <div class="chapter-index">
-
-      <div class="chapter-no">Chapter V</div>
-
-      <div class="chapter-word">記得</div>
-
-    </div>
-
-    <div class="chapter-content">
-
-      <h2 class="chapter-title">有被記得的人</h2>
-
-      <p class="chapter-text">但有趣的是，
-
+    <section class="page">
+      <div class="bg-big">記得</div>
+      <div class="wrap grid">
+        <div>
+          <div class="kicker enter">Chapter 05</div>
+          <h2 class="enter delay">有被記得的人</h2>
+          <p class="copy enter delay2">但有趣的是，
 這個人曾經說過：
 
 「現在會記得別人生日的人很少了。」
 
 所以今天這件事，
-
 要特別註明一下：
 
 他有被記得。
 
 而且不是手機提醒那種記得。
-
 是真的有人記得。</p>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section chapter">
-
-  <div class="wrap chapter-grid">
-
-    <div class="chapter-index">
-
-      <div class="chapter-no">Chapter VI</div>
-
-      <div class="chapter-word">風</div>
-
-    </div>
-
-    <div class="chapter-content">
-
-      <h2 class="chapter-title">喜歡戶外的人</h2>
-
-      <p class="chapter-text">他喜歡戶外活動，
-
-喜歡玩 SUP，
-
-喜歡看山，
-
-也喜歡騎著檔車去山路兜風。</p>
-
-      <div class="outdoor-grid">
-
-        <div class="outdoor-item">
-
-          <div class="big">SUP</div>
-
-          <div class="small">on the water</div>
-
         </div>
-
-        <div class="outdoor-item">
-
-          <div class="big">山</div>
-
-          <div class="small">quiet view</div>
-
+        <div class="flip-card enter delay2">
+          <div class="flip-inner">
+            <div class="flip-face"><div class="flip-label">note</div><div class="flip-main">他有被記得。</div><div class="tap">點一下翻牌</div></div>
+            <div class="flip-face flip-back"><div class="flip-label">important</div><div class="flip-main">不是手機提醒。<br>是真的有人記得。</div><div class="tap">再點一下翻回來</div></div>
+          </div>
         </div>
-
-        <div class="outdoor-item">
-
-          <div class="big">檔車</div>
-
-          <div class="small">mountain road</div>
-
-        </div>
-
       </div>
+    </section>
 
-    </div>
+    <section class="page">
+      <div class="bg-big">風</div>
+      <div class="wrap">
+        <div class="kicker enter">Chapter 06</div>
+        <h2 class="enter delay">喜歡戶外的人</h2>
+        <p class="copy enter delay2">他喜歡戶外活動，
+喜歡玩 SUP，
+喜歡看山，
+也喜歡騎著檔車去山路兜風。</p>
+        <div class="outdoor enter delay2">
+          <div><b>SUP</b><span>on the water</span></div>
+          <div><b>山</b><span>quiet view</span></div>
+          <div><b>檔車</b><span>mountain road</span></div>
+        </div>
+      </div>
+    </section>
 
-  </div>
-
-</section>
-
-<section class="section chapter">
-
-  <div class="wrap chapter-grid">
-
-    <div class="chapter-index">
-
-      <div class="chapter-no">Chapter VII</div>
-
-      <div class="chapter-word">6/30</div>
-
-    </div>
-
-    <div class="chapter-content">
-
-      <h2 class="chapter-title">還在了解他的人</h2>
-
-      <p class="chapter-text">最後正式介紹一次：
+    <section class="page">
+      <div class="bg-big">6/30</div>
+      <div class="wrap grid">
+        <div class="side-word enter">6/30</div>
+        <div>
+          <div class="kicker enter">Chapter 07</div>
+          <h2 class="enter delay">還在了解他的人</h2>
+          <p class="copy enter delay2">最後正式介紹一次：
 
 這位是 6/30 的壽星。
 
 好像也沒辦法用一句話定義他，
-
 因為認識了兩年，
-
 到現在還是在了解他的過程。
 
 他低調、實際、話不多，
-
 但能肯定的是，
-
 他是一個心很善良，
-
 也很溫柔的人。</p>
+        </div>
+      </div>
+    </section>
 
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section final">
-
-  <div class="final-card">
-
-    <div class="kicker">Final Chapter</div>
-
-    <h2 class="final-title">生日快樂</h2>
-
-    <p class="final-text">一直以來，
-
+    <section class="page">
+      <div class="bg-big">Happy</div>
+      <div class="wrap">
+        <div class="panel enter">
+          <div class="kicker">Final Chapter</div>
+          <h2>生日快樂</h2>
+          <p class="copy">一直以來，
 謝謝你的包容與陪伴。
 
 希望這位壽星今年：
-
 工作多一點有趣的事，
-
 生活多一點開心的事，
-
 身體平安健康。
 
 還有，
-
 Miu 也要健健康康的。
 
 祝你明天的鐵板燒吃得愉快。</p>
-
-    <div class="sign">6 / 30 ・ A little birthday profile made for you</div>
+          <div class="small">6 / 30 ・ A little birthday page made for you</div>
+        </div>
+      </div>
+    </section>
 
   </div>
-
-</section>
-
 </main>
 
-</body>
+<script>
+(function(){
+  var pages = Array.prototype.slice.call(document.querySelectorAll(".page"));
+  var nav = document.getElementById("nav");
+  var progress = document.getElementById("progress");
+  var confetti = document.getElementById("confetti");
+  var current = 0;
+  var locked = false;
+  var sx = 0;
+  var sy = 0;
 
+  pages.forEach(function(_,i){
+    var d = document.createElement("button");
+    d.className = "dot" + (i===0 ? " active" : "");
+    d.setAttribute("aria-label","page " + (i+1));
+    d.addEventListener("click",function(){go(i);});
+    nav.appendChild(d);
+  });
+
+  function update(){
+    pages.forEach(function(p,i){
+      p.classList.remove("active","prev");
+      if(i === current) p.classList.add("active");
+      else if(i < current) p.classList.add("prev");
+    });
+    Array.prototype.slice.call(document.querySelectorAll(".dot")).forEach(function(d,i){
+      d.classList.toggle("active",i===current);
+    });
+    progress.style.width = ((current + 1) / pages.length * 100) + "%";
+    if(current === pages.length - 1) boom();
+  }
+
+  function go(i){
+    if(locked) return;
+    if(i < 0 || i >= pages.length || i === current) return;
+    locked = true;
+    current = i;
+    update();
+    setTimeout(function(){locked = false;}, 900);
+  }
+
+  function next(){go(current+1)}
+  function prev(){go(current-1)}
+
+  window.addEventListener("wheel",function(e){
+    if(Math.abs(e.deltaY) < 12) return;
+    if(e.deltaY > 0) next(); else prev();
+  },{passive:true});
+
+  window.addEventListener("keydown",function(e){
+    if(e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === " ") next();
+    if(e.key === "ArrowUp" || e.key === "ArrowLeft") prev();
+  });
+
+  window.addEventListener("touchstart",function(e){
+    sx = e.changedTouches[0].clientX;
+    sy = e.changedTouches[0].clientY;
+  },{passive:true});
+
+  window.addEventListener("touchend",function(e){
+    var x = e.changedTouches[0].clientX;
+    var dx = x - sx;
+    if(Math.abs(dx) > 42){
+      if(dx < 0) next(); else prev();
+    }
+  },{passive:true});
+
+  document.querySelectorAll(".flip-card").forEach(function(card){
+    card.addEventListener("click",function(e){
+      e.stopPropagation();
+      card.classList.toggle("flipped");
+    });
+  });
+
+  function boom(){
+    if(confetti.dataset.done === "1") return;
+    confetti.dataset.done = "1";
+    var colors = ["#07399b","#f4b942","#e86a5a","#6ba86f","#ffffff"];
+    for(var i=0;i<80;i++){
+      var c = document.createElement("i");
+      c.style.left = Math.random()*100 + "vw";
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDelay = (Math.random()*0.5) + "s";
+      c.style.animationDuration = (1.4 + Math.random()*1.5) + "s";
+      c.style.transform = "rotate(" + Math.random()*180 + "deg)";
+      confetti.appendChild(c);
+      setTimeout(function(el){ if(el && el.parentNode) el.parentNode.removeChild(el); }, 3300, c);
+    }
+  }
+
+  update();
+})();
+</script>
+</body>
 </html>
