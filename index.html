@@ -26,6 +26,8 @@
 
       --gold-soft: rgba(176, 138, 79, 0.16);
 
+      --gold-faint: rgba(176, 138, 79, 0.42);
+
       --shadow: 0 18px 45px rgba(31, 42, 54, 0.12);
 
     }
@@ -798,24 +800,6 @@
 
     }
 
-    .memory-page .quote-note {
-
-      position: relative;
-
-      margin: 4px 0 8px;
-
-      padding: 8px 0 8px 14px;
-
-      border-left: 3px solid rgba(176, 138, 79, 0.52);
-
-      background: linear-gradient(90deg, rgba(176, 138, 79, 0.09), transparent 88%);
-
-      border-radius: 0 14px 14px 0;
-
-      line-height: 1.58;
-
-    }
-
     .memory-space {
 
       height: 18px;
@@ -871,6 +855,110 @@
       font-size: 1.08em;
 
       font-weight: 800;
+
+    }
+
+    .memory-quote {
+
+      position: relative;
+
+      width: 100%;
+
+      margin: 6px 0 10px;
+
+      padding: 24px 16px 30px;
+
+      text-align: center;
+
+      opacity: 0;
+
+      transform: translateY(14px);
+
+    }
+
+    .page.active .memory-quote {
+
+      animation: quoteBoxIn 950ms cubic-bezier(.22,.61,.36,1) forwards 1800ms;
+
+    }
+
+    @keyframes quoteBoxIn {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(14px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+      }
+
+    }
+
+    .quote-mark {
+
+      display: block;
+
+      width: 100%;
+
+      line-height: 0.8;
+
+      color: var(--gold-faint);
+
+      font-weight: 900;
+
+      font-family: Georgia, "Times New Roman", serif;
+
+      user-select: none;
+
+      pointer-events: none;
+
+    }
+
+    .quote-mark.open {
+
+      text-align: left;
+
+      font-size: 82px;
+
+      margin-bottom: -6px;
+
+      padding-left: 6px;
+
+    }
+
+    .quote-mark.close {
+
+      text-align: right;
+
+      font-size: 82px;
+
+      margin-top: -2px;
+
+      padding-right: 6px;
+
+    }
+
+    .quote-text-center {
+
+      font-size: 1.02em;
+
+      line-height: 1.68;
+
+      font-weight: 700;
+
+      letter-spacing: 0.03em;
+
+      text-align: center;
+
+      padding: 0 10px;
 
     }
 
@@ -1334,6 +1422,14 @@
 
       }
 
+      .quote-mark.open,
+
+      .quote-mark.close {
+
+        font-size: 70px;
+
+      }
+
     }
 
     @media (max-width: 360px) {
@@ -1357,6 +1453,14 @@
       .quote-big {
 
         font-size: clamp(52px, 14vw, 72px);
+
+      }
+
+      .quote-mark.open,
+
+      .quote-mark.close {
+
+        font-size: 66px;
 
       }
 
@@ -1572,25 +1676,33 @@
 
             <div class="spacer"></div>
 
-            <div class="line quote-note" style="--d: 1800ms;">「現在會記得別人生日的人很少了。」</div>
+            <div class="memory-quote">
+
+              <span class="quote-mark open">“</span>
+
+              <div class="quote-text-center">現在會記得別人生日的人很少了</div>
+
+              <span class="quote-mark close">”</span>
+
+            </div>
 
             <div class="memory-space"></div>
 
-            <div class="line" style="--d: 3000ms;">所以今天這件事，</div>
+            <div class="line" style="--d: 3200ms;">所以今天這件事，</div>
 
-            <div class="line" style="--d: 3700ms;">要特別註明一下：</div>
-
-            <div class="memory-space large"></div>
-
-            <div class="line memory-focus" style="--d: 4700ms;">他有被記得。</div>
+            <div class="line" style="--d: 3900ms;">要特別註明一下：</div>
 
             <div class="memory-space large"></div>
 
-            <div class="line" style="--d: 5800ms;">而且不是手機提醒那種記得。</div>
+            <div class="line memory-focus" style="--d: 4900ms;">他有被記得。</div>
+
+            <div class="memory-space large"></div>
+
+            <div class="line" style="--d: 6000ms;">而且不是手機提醒那種記得。</div>
 
             <div class="memory-space"></div>
 
-            <div class="line soft-point" style="--d: 6500ms;">是真的有人記得。</div>
+            <div class="line soft-point" style="--d: 6700ms;">是真的有人記得。</div>
 
           </div>
 
@@ -1838,7 +1950,7 @@
 
       const animated = page.querySelectorAll(
 
-        ".line, .hello, .rating-wrap, .rating-fill, .cert-stamp, .processing, .teppan, .steam, .eyes, .paw"
+        ".line, .hello, .rating-wrap, .rating-fill, .cert-stamp, .processing, .teppan, .steam, .eyes, .paw, .memory-quote"
 
       );
 
